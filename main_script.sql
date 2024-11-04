@@ -23,9 +23,9 @@ BEGIN
         IS_ACTIVE NUMBER(1) CHECK (IS_ACTIVE IN (0, 1))
     )';
     dbms_output.put_line('Table "USERS" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
@@ -55,9 +55,9 @@ BEGIN
         COUNTRY VARCHAR2(50)
     )';
     dbms_output.put_line('Table "ADDRESS" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
@@ -93,15 +93,16 @@ BEGIN
         CONSTRAINT CHK_DISABILITY CHECK (DISABILITY IN (''do not wish to disclose'', ''no, i do not have a disability'', ''yes, I have a disability''))
     )';
     dbms_output.put_line('Table "CANDIDATES" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- WORK EXPERIENCE cleanup with creation - Candidate's Work Experience
-DECLARE ROWS_COUNT NUMBER;
+DECLARE
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -123,15 +124,16 @@ BEGIN
         FOREIGN KEY (CANDIDATE_ID) REFERENCES CANDIDATES(CANDIDATE_ID)
     )';
     dbms_output.put_line('Table "WORK_EXP" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- EDUCATION table cleanup with creation
-DECLARE ROWS_COUNT NUMBER;
+DECLARE
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -154,15 +156,16 @@ BEGIN
         FOREIGN KEY (CANDIDATE_ID) REFERENCES CANDIDATES(CANDIDATE_ID)
     )';
     dbms_output.put_line('Table "EDUCATION" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- RESUME table creation
-DECLARE ROWS_COUNT NUMBER;
+DECLARE
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -191,7 +194,8 @@ END;
 
 
 -- SKILLS table creation - all the skills present on the platform
-DECLARE ROWS_COUNT NUMBER;
+DECLARE
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -208,15 +212,16 @@ BEGIN
         SKILL_NAME VARCHAR2(100) NOT NULL
     )';
     dbms_output.put_line('Table "SKILLS" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- CANDIDATE SKILLS Join Table
-DECLARE ROWS_COUNT NUMBER;
+DECLARE
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -237,11 +242,12 @@ BEGIN
         CONSTRAINT UN_CAN_SKILL UNIQUE(CANDIDATE_ID, SKILL_ID)
     )';
     dbms_output.put_line('Table "CANDIDATE_SKILLS" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
+
 
 -- COMPANY table cleanup with creation
 DECLARE ROWS_COUNT NUMBER;
@@ -266,15 +272,16 @@ BEGIN
         FOREIGN KEY (ADD_ID) REFERENCES ADDRESS(ADDRESS_ID)
     )';
     dbms_output.put_line('Table "COMPANIES" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- RECRUITER table cleanup with creation
-DECLARE ROWS_COUNT NUMBER;
+DECLARE 
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -295,15 +302,16 @@ BEGIN
         CONSTRAINT UN_REC_COM UNIQUE (USER_ID, COMPANY_ID)
     )';
     dbms_output.put_line('Table "RECRUITERS" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- JOB REQUISITION table creation
-DECLARE ROWS_COUNT NUMBER;
+DECLARE 
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -331,15 +339,16 @@ BEGIN
         CONSTRAINT CHK_JOB_REQ_STATUS CHECK (STATUS IN (''cancelled'', ''closed'', ''open''))
     )';
     dbms_output.put_line('Table "JOB_REQUISITION" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
 
 
 -- CANDIDATE APPLICATION Join Table cleanup with creation
-DECLARE ROWS_COUNT NUMBER;
+DECLARE 
+    ROWS_COUNT NUMBER;
 BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
@@ -364,8 +373,8 @@ BEGIN
         ''requisition closed/ transfered'', ''role offered'', ''submitted'', ''withdrawn''))
     )';
     dbms_output.put_line('Table "CANDIDATE_APPLICATION" created successfully.');
-    EXCEPTION
-        WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
