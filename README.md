@@ -10,5 +10,9 @@
 - main_script.sql
 - insert_script.sql
 - view.sql
+- can_rec_users_creation.sql
+
+## Note
+- In case if the scripts need to be re-run, please run main_script.sql, insert_script.sql, view.sql and can_rec_users_creation.sql in the above sequence.
 
 
