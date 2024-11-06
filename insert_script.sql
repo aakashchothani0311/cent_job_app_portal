@@ -11,7 +11,7 @@ VALUES
 ('ROSS', 'MILLER', 'rmiller@jmail.com', 'RMILLER', 'Rmiller@123'),
 ('DAVID', 'AUSTIN', 'daustin@jmail.com', 'DAUSTIN', 'Daustin@123'),
 ('MAT', 'HENRY', 'mhenry@jmail.com', 'MHENRY', 'Mhenry@123'),
-('RAVIN', 'PATEL', 'rpatel@jmail.com', 'RPATEL', 'Rpatel@123')
+('RAVIN', 'PATEL', 'rpatel@jmail.com', 'RPATEL', 'Rpatel@123'),
 ('APP', 'ADMIN', 'aadmin@jmail.com', 'AADMIN', 'Aadmin@123' );
 
 -- ADDRESS TABLE INSERT DATA
@@ -83,7 +83,7 @@ VALUES
 (3, EMPTY_BLOB(), 'Data Analysis Resume'),
 (4, EMPTY_BLOB(), 'Product Management Resume'),
 (5, EMPTY_BLOB(), 'Quality Engineering Resume'),
-(6, EMPTY_BLOB(), 'System Administration Resume')
+(6, EMPTY_BLOB(), 'System Administration Resume'),
 (7, EMPTY_BLOB(), 'Product Management Resume');
 
 
@@ -100,10 +100,10 @@ VALUES
 ('Network Security'),
 ('Cloud Computing'),
 ('Marketing'),
-('Financial Analysis')
-('Quality Management')
-('Product Management')
-('ERP')
+('Financial Analysis'),
+('Quality Management'),
+('Product Management'),
+('ERP'),
 ('Software Development');
 
 -- CANDIDATE_SKILLS TABLE INSERT DATA
@@ -178,8 +178,8 @@ VALUES
 (4, 4, 'submitted'),
 (5, 5, 'withdrawn'),
 (6, 6, 'submitted'),
-(7, 7, 'offer accepted'),
+(7, 7, 'offer accepted');
 
 
-COMMIT;
+
 
