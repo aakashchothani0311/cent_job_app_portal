@@ -29,15 +29,15 @@ VALUES
 
 -- CANDIDATES TABLE INSERT DATA
 INSERT INTO CANDIDATES 
-(USER_ID, ADD_ID, PHONE, AGE, GENDER, VETERAN, DISABILITY) 
+(USER_ID, ADD_ID, PHONE, AGE, GENDER, VETERAN, DISABILITY, DATE_OF_JOIN) 
 VALUES
-(1, 1, '555-1234-321', 25, 'male', 'not a veteran', 'no, i do not have a disability'),
-(2, 2, '111-2345-678', 23, 'female', 'not a veteran', 'do not wish to disclose'),
-(3, 3, '857-3456-411', 26, 'male', 'do not wish to disclose', 'yes, I have a disability'),
-(4, 4, '980-4567-911', 25, 'female', 'not a veteran', 'no, i do not have a disability'),
-(5, 5, '555-5678-087', 44, 'male', 'I am a protected veteran', 'do not wish to disclose'),
-(6, 6, '857-6789-745', 19, 'female', 'not a veteran', 'yes, I have a disability'),
-(7, 7, '857-7890-098', 27, 'male', 'do not wish to disclose', 'no, i do not have a disability');
+(1, 1, '555-1234-321', 25, 'male', 'not a veteran', 'no, i do not have a disability', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD')),
+(2, 2, '111-2345-678', 23, 'female', 'not a veteran', 'do not wish to disclose', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD')),
+(3, 3, '857-3456-411', 26, 'male', 'do not wish to disclose', 'yes, I have a disability', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD')),
+(4, 4, '980-4567-911', 25, 'female', 'not a veteran', 'no, i do not have a disability', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD')),
+(5, 5, '555-5678-087', 44, 'male', 'I am a protected veteran', 'do not wish to disclose', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD')),
+(6, 6, '857-6789-745', 19, 'female', 'not a veteran', 'yes, I have a disability', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD')),
+(7, 7, '857-7890-098', 27, 'male', 'do not wish to disclose', 'no, i do not have a disability', TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD'));
 
 
 -- WORK_EXP TABLE INSERT DATA
@@ -180,6 +180,6 @@ VALUES
 (6, 6, 'submitted'),
 (7, 7, 'offer accepted');
 
-
+commit;
 
 
