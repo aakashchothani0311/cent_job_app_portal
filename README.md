@@ -8,7 +8,7 @@
 
 3. Run the below scripts in the following order:
 - main_script.sql
-- inser_script.sql
+- insert_script.sql
 - view.sql
 
 
