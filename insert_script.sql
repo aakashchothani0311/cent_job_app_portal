@@ -12,7 +12,7 @@ VALUES
     ('DAVID', 'AUSTIN', 'daustin@jmail.com', 'DAUSTIN', 'Daustin@123'),
     ('MAT', 'HENRY', 'mhenry@jmail.com', 'MHENRY', 'Mhenry@123'),
     ('RAVIN', 'PATEL', 'rpatel@jmail.com', 'RPATEL', 'Rpatel@123'),
-    ('AAKASH', 'CHOTHANI', 'aakash@jmail.com', 'ACHOT', 'Aadmin@123' );
+    ('AAKASH', 'CHOTHANI', 'aakash@jmail.com', 'ACHOT', 'Aadmin@123');
 
 
 -- ADDRESS TABLE INSERT DATA
@@ -155,16 +155,16 @@ INSERT INTO JOB_REQUISITION
     (COMPANY_ID, RECRUITER_ID, JOB_TITLE, JOB_DESCRIPTION, APPLICATION_DEADLINE, 
 EXPECTED_START_DATE, RELOCATION_ALLOWANCE, STATUS) 
 VALUES
-    (1, 1, 'Software Engineer', 'Develop and maintain software applications.', TO_DATE('2024-02-15', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 1, 'open'),
-    (1, 2, 'Data Scientist', 'Analyze data and build predictive models.', TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), 1, 'open'),
-    (3, 3, 'Project Manager', 'Oversee healthcare projects.', TO_DATE('2024-03-10', 'YYYY-MM-DD'), TO_DATE('2024-05-01', 'YYYY-MM-DD'), 0, 'open'),
-    (4, 4, 'Mechanical Engineer', 'Design automotive parts and systems.', TO_DATE('2024-04-10', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'), 0, 'open'),
-    (6, 5, 'Data Analyst', 'Interpret data to improve decision-making.', TO_DATE('2024-03-15', 'YYYY-MM-DD'), TO_DATE('2024-04-10', 'YYYY-MM-DD'), 0, 'open'),
-    (6, 6, 'Accountant', 'Manage financial records and budgeting.', TO_DATE('2024-03-25', 'YYYY-MM-DD'), TO_DATE('2024-05-05', 'YYYY-MM-DD'), 0, 'open'),
-    (4, 1, 'Retail Manager', 'Oversee retail operations.', TO_DATE('2024-02-28', 'YYYY-MM-DD'), TO_DATE('2024-03-20', 'YYYY-MM-DD'), 1, 'open'),
-    (3, 2, 'Construction Engineer', 'Manage construction projects.', TO_DATE('2024-04-01', 'YYYY-MM-DD'), TO_DATE('2024-05-10', 'YYYY-MM-DD'), 1, 'open'),
-    (6, 3, 'Network Administrator', 'Manage and secure network infrastructure.', TO_DATE('2024-03-20', 'YYYY-MM-DD'), TO_DATE('2024-05-01', 'YYYY-MM-DD'), 1, 'open'),
-    (4, 4, 'Research Scientist', 'Conduct scientific research and analysis.', TO_DATE('2024-03-30', 'YYYY-MM-DD'), TO_DATE('2024-05-15', 'YYYY-MM-DD'), 0, 'open');
+    (1, 1, 'Software Engineer', 'Develop and maintain software applications.', TO_DATE('2025-02-15', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 1, 'open'),
+    (1, 2, 'Data Scientist', 'Analyze data and build predictive models.', TO_DATE('2025-03-01', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), 1, 'open'),
+    (3, 3, 'Project Manager', 'Oversee healthcare projects.', TO_DATE('2025-03-10', 'YYYY-MM-DD'), TO_DATE('2024-05-01', 'YYYY-MM-DD'), 0, 'open'),
+    (4, 4, 'Mechanical Engineer', 'Design automotive parts and systems.', TO_DATE('2025-04-10', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'), 0, 'open'),
+    (6, 5, 'Data Analyst', 'Interpret data to improve decision-making.', TO_DATE('2025-03-15', 'YYYY-MM-DD'), TO_DATE('2024-04-10', 'YYYY-MM-DD'), 0, 'open'),
+    (6, 6, 'Accountant', 'Manage financial records and budgeting.', TO_DATE('2025-03-25', 'YYYY-MM-DD'), TO_DATE('2024-05-05', 'YYYY-MM-DD'), 0, 'open'),
+    (4, 1, 'Retail Manager', 'Oversee retail operations.', TO_DATE('2025-02-28', 'YYYY-MM-DD'), TO_DATE('2024-03-20', 'YYYY-MM-DD'), 1, 'open'),
+    (3, 2, 'Construction Engineer', 'Manage construction projects.', TO_DATE('2025-04-01', 'YYYY-MM-DD'), TO_DATE('2024-05-10', 'YYYY-MM-DD'), 1, 'open'),
+    (6, 3, 'Network Administrator', 'Manage and secure network infrastructure.', TO_DATE('2025-03-20', 'YYYY-MM-DD'), TO_DATE('2024-05-01', 'YYYY-MM-DD'), 1, 'open'),
+    (4, 4, 'Research Scientist', 'Conduct scientific research and analysis.', TO_DATE('2025-03-30', 'YYYY-MM-DD'), TO_DATE('2024-05-15', 'YYYY-MM-DD'), 0, 'open');
 
 
 -- CANDIDATE_APPLICATION TABLE INSERT DATA
@@ -172,7 +172,7 @@ INSERT INTO CANDIDATE_APPLICATION
     (CANDIDATE_ID, REQ_ID, STATUS) 
 VALUES
     (1, 1, 'submitted'),
-    (2, 2, 'in review'),
+    (2, 1, 'in review'),
     (3, 3, 'role offered'),
     (4, 4, 'submitted'),
     (5, 5, 'withdrawn'),
