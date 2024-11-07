@@ -1,5 +1,6 @@
 --VIEWS/REPORT
 --VIEW 1: JOBS-APPLIED HISTORY
+--For a candidate(chris jones), the list of all jobs that he has applied 
 SET SERVEROUTPUT ON;
 DECLARE
     ROWS_COUNT NUMBER;
@@ -30,6 +31,7 @@ BEGIN
     JOIN JOB_REQUISITION JR ON CA.REQ_ID = JR.REQ_ID
     JOIN COMPANIES COM ON JR.COMPANY_ID = COM.COMPANY_ID
     JOIN USERS U ON C.USER_ID = U.USER_ID
+    WHERE C.CANDIDATE_ID = 4
     ORDER BY C.CANDIDATE_ID';
         
     dbms_output.put_line('Materialized View "JOBS_APPLIED_HISTORY" created successfully.');
@@ -41,6 +43,7 @@ END;
 
 
 --VIEW 2: JOBS-CREATED HISTORY
+--For a recruiter(allen lugo), the list of all jobs that are created
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -70,6 +73,7 @@ BEGIN
     JOIN RECRUITERS R ON JR.RECRUITER_ID = R.RECRUITER_ID
     JOIN COMPANIES COM ON JR.COMPANY_ID = COM.COMPANY_ID
     JOIN USERS U ON R.USER_ID = U.USER_ID
+    WHERE R.RECRUITER_ID = 1
     ORDER BY R.RECRUITER_ID, REQ_ID';
         
     dbms_output.put_line('Materialized View "JOBS_CREATED_HISTORY" created successfully.');
@@ -81,6 +85,7 @@ END;
 
 
 --VIEW 3: CANDIDATES-JOBS APPLIED
+--For a particular job posting by a recruiter, the list of all candidates applied to same job
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -112,7 +117,8 @@ BEGIN
     JOIN CANDIDATES C ON CA.CANDIDATE_ID = C.CANDIDATE_ID
     JOIN JOB_REQUISITION JR ON CA.REQ_ID = JR.REQ_ID
     JOIN USERS U ON C.USER_ID = U.USER_ID
-    WHERE JR.REQ_ID = 1';
+    WHERE JR.REQ_ID = 6';
+    
         
     dbms_output.put_line('Materialized View "CANDIDATES_JOBS_APPLIED" created successfully.');
 EXCEPTION
@@ -123,6 +129,7 @@ END;
 
 
 -- VIEW 4: JOBS-OPEN
+--The list of all open jobs for candidates and recruiters
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -163,6 +170,7 @@ END;
 
 
 -- VIEW 5: CANDIDATE-PROFILE
+--Current data from a candidates profile (chris jones) along with skills
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -185,11 +193,12 @@ BEGIN
         U.FIRSTNAME || '' '' || U.LASTNAME AS CANDIDATE_NAME,
         U.EMAIL,
         C.PHONE,
+        LISTAGG(S.SKILL_NAME, '', '') WITHIN GROUP (ORDER BY S.SKILL_NAME) AS SKILLS,
         C.AGE,
         C.GENDER,
         C.VETERAN,
         C.DISABILITY,
-        C.DATE_OF_JOIN,
+        TO_CHAR(C.DATE_OF_JOIN,  ''MM/DD/YYYY'') JOINED_DATE,
         A.STREET1,
         A.STREET2,
         A.CITY,
@@ -198,7 +207,13 @@ BEGIN
     FROM CANDIDATES C
     LEFT JOIN ADDRESS A ON C.ADD_ID = A.ADDRESS_ID
     JOIN USERS U ON C.USER_ID = U.USER_ID
-    WHERE C.CANDIDATE_ID = 4';
+    JOIN CANDIDATE_SKILLS CS ON C.CANDIDATE_ID = CS.CANDIDATE_ID 
+    JOIN SKILLS S ON CS.SKILL_ID = S.SKILL_ID
+    WHERE C.CANDIDATE_ID = 4
+    GROUP BY
+    C.CANDIDATE_ID, U.FIRSTNAME, U.LASTNAME, U.EMAIL, C.PHONE, C.AGE, 
+    C.GENDER, C.VETERAN, C.DISABILITY, C.DATE_OF_JOIN, 
+    A.STREET1, A.STREET2, A.CITY, A.STATE, A.ZIPCODE';
         
     dbms_output.put_line('Materialized View "CANDIDATE_PROFILE" created successfully.');
 EXCEPTION
