@@ -128,14 +128,14 @@ BEGIN
     SELECT COUNT(*)
     INTO ROWS_COUNT
     FROM USER_MVIEWS
-    WHERE MVIEW_NAME = 'JOBS_OPEN';
+    WHERE MVIEW_NAME = 'OPEN_JOBS';
     
     IF ROWS_COUNT > 0 THEN 
-        EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW JOBS_OPEN';
-        dbms_output.put_line('Materialized View "JOBS_OPEN" dropped.');
+        EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW OPEN_JOBS';
+        dbms_output.put_line('Materialized View "OPEN_JOBS" dropped.');
     END IF;
     
-    EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW JOBS_OPEN
+    EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW OPEN_JOBS
     BUILD IMMEDIATE 
     REFRESH COMPLETE 
     ON DEMAND AS
@@ -153,7 +153,7 @@ BEGIN
     WHERE JR.STATUS = ''open''
     ORDER BY COM.COMPANY_ID, REQ_ID, JR.DATE_POSTED, JR.APPLICATION_DEADLINE';
         
-    dbms_output.put_line('Materialized View "JOBS_OPEN" created successfully.');
+    dbms_output.put_line('Materialized View "OPEN_JOBS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
