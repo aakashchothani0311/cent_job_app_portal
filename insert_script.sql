@@ -172,7 +172,7 @@ INSERT INTO CANDIDATE_APPLICATION
     (CANDIDATE_ID, REQ_ID, STATUS) 
 VALUES
     (1, 1, 'submitted'),
-    (2, 2, 'in review'),
+    (2, 1, 'in review'),
     (3, 3, 'role offered'),
     (4, 4, 'submitted'),
     (5, 5, 'withdrawn'),

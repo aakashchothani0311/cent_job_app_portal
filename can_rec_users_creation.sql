@@ -41,8 +41,10 @@ BEGIN
     EXECUTE IMMEDIATE 'GRANT SELECT ON JOBS_CREATED_HISTORY TO ALUGO';
     EXECUTE IMMEDIATE 'GRANT SELECT ON CANDIDATES_JOBS_APPLIED TO ALUGO';
     dbms_output.put_line('RECRUITER USER "Allen Lugo" created successfully.');
+    
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
 END;
 /
+
