@@ -1,12 +1,4 @@
---------------------------------------------------------
---  File created - Tuesday-November-19-2024   
---------------------------------------------------------
---------------------------------------------------------
---  DDL for Procedure REC_USER_CREATION
---------------------------------------------------------
-set define off;
-
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN_SUPER_USER"."REC_USER_CREATION" (
+CREATE OR REPLACE PROCEDURE REC_USER_CREATION (
     PI_FNAME USERS.FIRSTNAME%TYPE,
     PI_LNAME USERS.LASTNAME%TYPE,
     PI_USERNAME USERS.USERNAME%TYPE,
@@ -38,12 +30,10 @@ BEGIN
 EXCEPTION
     -- Handle exceptions
     WHEN NO_DATA_FOUND THEN
-  --  WHEN V_COMPANY_DOES_NOT_EXIST THEN
         DBMS_OUTPUT.PUT_LINE('ERROR: COMPANY DOES NOT EXIST');
+        
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('ERROR: ' || SQLERRM);
         
-        
 END REC_USER_CREATION;
-
 /
