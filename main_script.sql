@@ -10,7 +10,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE USERS CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "USERS" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "USERS" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE USERS (
@@ -22,7 +22,7 @@ BEGIN
         PASSWORD VARCHAR2(50) NOT NULL,
         IS_ACTIVE NUMBER(1) DEFAULT 1 CHECK (IS_ACTIVE IN (0, 1))
     )';
-    dbms_output.put_line('Table "USERS" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "USERS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -41,7 +41,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE ADDRESS CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "ADDRESS" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "ADDRESS" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE ADDRESS (
@@ -54,7 +54,7 @@ BEGIN
         ZIPCODE VARCHAR2(50),
         COUNTRY VARCHAR2(50) NOT NULL
     )';
-    dbms_output.put_line('Table "ADDRESS" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "ADDRESS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -73,7 +73,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE CANDIDATES CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "CANDIDATES" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "CANDIDATES" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE CANDIDATES (
@@ -93,7 +93,7 @@ BEGIN
         CONSTRAINT CHK_VET_STATUS CHECK (VETERAN IN (''do not wish to disclose'', ''not a veteran'', ''I am a protected veteran'')),
         CONSTRAINT CHK_DISABILITY CHECK (DISABILITY IN (''do not wish to disclose'', ''no, i do not have a disability'', ''yes, I have a disability''))
     )';
-    dbms_output.put_line('Table "CANDIDATES" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "CANDIDATES" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -112,7 +112,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE WORK_EXP CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "WORK_EXP" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "WORK_EXP" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE WORK_EXP (
@@ -125,7 +125,7 @@ BEGIN
         DESCRIPTION VARCHAR2(2000),
         FOREIGN KEY (CANDIDATE_ID) REFERENCES CANDIDATES(CANDIDATE_ID)
     )';
-    dbms_output.put_line('Table "WORK_EXP" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "WORK_EXP" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -144,7 +144,7 @@ BEGIN
      
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE EDUCATION CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "EDUCATION" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "EDUCATION" dropped.');
     END IF;
         
     EXECUTE IMMEDIATE 'CREATE TABLE EDUCATION (
@@ -158,7 +158,7 @@ BEGIN
         DEGREE_COMPLETED NUMBER(1) DEFAULT 1 CHECK (DEGREE_COMPLETED IN (0,1)) ,
         FOREIGN KEY (CANDIDATE_ID) REFERENCES CANDIDATES(CANDIDATE_ID)
     )';
-    dbms_output.put_line('Table "EDUCATION" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "EDUCATION" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -177,7 +177,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE RESUME CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "RESUME" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "RESUME" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE RESUME (
@@ -188,7 +188,7 @@ BEGIN
         DESCRIPTION VARCHAR2(50),
         FOREIGN KEY (CANDIDATE_ID) REFERENCES CANDIDATES(CANDIDATE_ID)
     )';
-    dbms_output.put_line('Table "RESUME" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "RESUME" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -207,14 +207,14 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE SKILLS CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "SKILLS" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "SKILLS" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE SKILLS (
         SKILL_ID NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         SKILL_NAME VARCHAR2(100) UNIQUE NOT NULL
     )';
-    dbms_output.put_line('Table "SKILLS" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "SKILLS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -233,7 +233,7 @@ BEGIN
 
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE CANDIDATE_SKILLS CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "CANDIDATE_SKILLS" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "CANDIDATE_SKILLS" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE CANDIDATE_SKILLS (
@@ -244,7 +244,7 @@ BEGIN
         FOREIGN KEY (SKILL_ID) REFERENCES SKILLS(SKILL_ID),
         CONSTRAINT UN_CAN_SKILL UNIQUE(CANDIDATE_ID, SKILL_ID)
     )';
-    dbms_output.put_line('Table "CANDIDATE_SKILLS" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "CANDIDATE_SKILLS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -262,7 +262,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE COMPANIES CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "COMPANIES" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "COMPANIES" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE COMPANIES (
@@ -274,7 +274,7 @@ BEGIN
         IS_ACTIVE NUMBER(1) DEFAULT 1 CHECK (IS_ACTIVE IN (0,1)),
         FOREIGN KEY (ADD_ID) REFERENCES ADDRESS(ADDRESS_ID)
     )';
-    dbms_output.put_line('Table "COMPANIES" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "COMPANIES" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -293,7 +293,7 @@ BEGIN
     
     IF ROWS_COUNT > 0  THEN 
         EXECUTE IMMEDIATE 'DROP TABLE RECRUITERS CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "RECRUITERS" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "RECRUITERS" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE RECRUITERS (
@@ -304,7 +304,7 @@ BEGIN
         FOREIGN KEY (COMPANY_ID) REFERENCES COMPANIES(COMPANY_ID),
         CONSTRAINT UN_REC_COM UNIQUE (USER_ID, COMPANY_ID)
     )';
-    dbms_output.put_line('Table "RECRUITERS" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "RECRUITERS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -323,7 +323,7 @@ BEGIN
     
      IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE JOB_REQUISITION CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "JOB_REQUISITION" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "JOB_REQUISITION" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE JOB_REQUISITION (
@@ -341,7 +341,7 @@ BEGIN
         FOREIGN KEY (RECRUITER_ID) REFERENCES RECRUITERS(RECRUITER_ID),
         CONSTRAINT CHK_JOB_REQ_STATUS CHECK (STATUS IN (''cancelled'', ''closed'', ''open''))
     )';
-    dbms_output.put_line('Table "JOB_REQUISITION" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "JOB_REQUISITION" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -360,7 +360,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP TABLE CANDIDATE_APPLICATION CASCADE CONSTRAINTS';
-        dbms_output.put_line('Table "CANDIDATE_APPLICATION" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Table "CANDIDATE_APPLICATION" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE TABLE CANDIDATE_APPLICATION (
@@ -376,7 +376,7 @@ BEGIN
         CONSTRAINT CHK_CAN_APP_STATUS CHECK (STATUS IN (''candidate rejected'', ''in review'', ''offer accepted'', ''offer rejected'', 
         ''requisition closed/ transfered'', ''role offered'', ''submitted'', ''withdrawn''))
     )';
-    dbms_output.put_line('Table "CANDIDATE_APPLICATION" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Table "CANDIDATE_APPLICATION" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
