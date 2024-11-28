@@ -1,0 +1,49 @@
+-- Test script for PKG_JOB_REQ_MGMT.CREATE_JOB_REQ
+DECLARE
+    C_VALID_REC_ID CONSTANT JOB_REQUISITION.RECRUITER_ID%TYPE := 2;
+BEGIN
+    UTIL_PKG.ADD_NEW_LINE('TESTING PKG_JOB_REQ_MGMT.CREATE_JOB_REQ PROCEDURE');
+    
+    DBMS_OUTPUT.PUT_LINE('1. Testing for NULL RECRUITER_ID:');
+    CREATE_JOB_REQ(NULL, 'TEST TITLE', 'TEST DESC');
+    
+    DBMS_OUTPUT.PUT_LINE('2. Testing for invalid RECRUITER_ID:');
+    CREATE_JOB_REQ('2342342', 'TEST TITLE', 'TEST DESC');
+    
+    DBMS_OUTPUT.PUT_LINE('3. Testing for invalid TITLE by passing an empty value:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, '', 'TEST DESC');
+    
+    DBMS_OUTPUT.PUT_LINE('4. Testing for invalid DESCRIPTION by passing an empty value:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, 'TEST TITLE', '');
+    
+    DBMS_OUTPUT.PUT_LINE('5. Testing for invalid APPLICATION_DEADLINE: APPLICATION_DEADLINE less than JOB_POSTED:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, 'TEST TITLE', 'TEST DESC', SYSDATE, SYSDATE - 3);
+    
+    DBMS_OUTPUT.PUT_LINE('6. Testing for invalid EXPECTED_START_DATE: EXPECTED_START_DATE less than JOB_POSTED:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, 'TEST TITLE', 'TEST DESC', SYSDATE, NULL, SYSDATE - 2, 0);
+    
+    DBMS_OUTPUT.PUT_LINE('7. Testing for invalid EXPECTED_START_DATE: EXPECTED_START_DATE less than APPLICATION_DEADLINE:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, 'TEST TITLE', 'TEST DESC', SYSDATE, SYSDATE + 7, NULL, 0);
+    
+    DBMS_OUTPUT.PUT_LINE('8. Testing for invalid EXPECTED_START_DATE: EXPECTED_START_DATE less than APPLICATION_DEADLINE:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, 'TEST TITLE', 'TEST DESC', SYSDATE, SYSDATE + 7, NULL, 0);
+    
+    DBMS_OUTPUT.PUT_LINE('9. Testing for invalid STATUS: STATUS other than valid (open, closed, cancelled) options:');
+    CREATE_JOB_REQ(C_VALID_REC_ID, 'TEST TITLE', 'TEST DESC', SYSDATE, SYSDATE + 7, NULL, 0, 'rejected');
+        
+    DBMS_OUTPUT.PUT_LINE('10. Testing for valid JOB_REQUISTION record with default values:');
+   -- CREATE_JOB_REQ(C_VALID_REC_ID, 'Software Engineering Intern', 'TEST DESC');
+    
+     DBMS_OUTPUT.PUT_LINE('11. Testing for valid JOB_REQUISTION record:');
+    /*CREATE_JOB_REQ(
+        PI_REC_ID => C_VALID_REC_ID,
+        PI_JOB_TITLE => 'Data Engineering Intern',
+        PI_JOB_DESC => 'TEST DESC',
+        PI_APP_DEADLINE => SYSDATE,
+        PI_EXP_START_DATE => NULL,
+        PI_RELOCATION_ALLOWANCE => 1
+    );*/
+    
+    COMMIT;
+END;
+/

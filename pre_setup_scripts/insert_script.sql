@@ -215,9 +215,9 @@ VALUES
     (4, 12, 'submitted'),
     (4, 9, 'submitted'),
     (4, 4, 'submitted'),
-    (4, 6, 'submitted'),
+    (4, 6, 'draft'),
     (5, 3, 'submitted'),
-    (5, 6, 'in review'),
+    (5, 6, 'draft'),
     (5, 10, 'in review');
 
-commit;
+COMMIT;
