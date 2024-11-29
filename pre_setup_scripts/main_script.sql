@@ -1,4 +1,4 @@
--- USER TABLE cleanup with creation 
+-- USER table cleanup with creation 
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -29,7 +29,7 @@ END;
 /
 
 
--- ADDRESS TABLE cleanup with creation
+-- ADDRESS table cleanup with creation
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -100,7 +100,7 @@ END;
 /
 
 
--- WORK EXPERIENCE cleanup with creation - Candidate's Work Experience
+-- WORK_EXP cleanup with creation - Candidate's Work Experience
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -221,7 +221,7 @@ END;
 /
 
 
--- CANDIDATE SKILLS Join Table
+-- CANDIDATE_SKILLS Join Table
 DECLARE
     ROWS_COUNT NUMBER;
 BEGIN
@@ -311,7 +311,7 @@ END;
 /
 
 
--- JOB REQUISITION table creation
+-- JOB_REQUISITION table creation
 DECLARE 
     ROWS_COUNT NUMBER;
 BEGIN
@@ -339,7 +339,8 @@ BEGIN
         FOREIGN KEY (COMPANY_ID) REFERENCES COMPANIES(COMPANY_ID),
         FOREIGN KEY (RECRUITER_ID) REFERENCES RECRUITERS(RECRUITER_ID),
         CONSTRAINT CHK_JOB_REQ_STATUS CHECK (STATUS IN (''cancelled'', ''closed'', ''open'')),
-        CONSTRAINT CHK_APP_DEADLINE_AFTER_POSTING CHECK (APPLICATION_DEADLINE > DATE_POSTED)
+        CONSTRAINT CHK_APP_DEADLINE_AFTER_POSTING CHECK (APPLICATION_DEADLINE > DATE_POSTED),
+        CONSTRAINT CHK_EXP_START_DATE CHECK (EXPECTED_START_DATE > DATE_POSTED and EXPECTED_START_DATE > DATE_POSTED)
     )';
     DBMS_OUTPUT.PUT_LINE('Table "JOB_REQUISITION" created successfully.');
 EXCEPTION
@@ -349,7 +350,7 @@ END;
 /
 
 
--- CANDIDATE APPLICATION Join Table cleanup with creation
+-- CANDIDATE_APPLICATION Join Table cleanup with creation
 DECLARE 
     ROWS_COUNT NUMBER;
 BEGIN
