@@ -2,17 +2,17 @@
 INSERT INTO USERS 
     (FIRSTNAME, LASTNAME, EMAIL, USERNAME, PASSWORD) 
 VALUES
-    ('JOHN', 'DEER', 'jdeer@jmail.com', 'JDEER', 'Jdeer@123'),
-    ('MISSY', 'RODRIGUEZ', 'jrodriguez@jmail.com', 'JRODRI', 'Jrodri@123'),
-    ('LIONEL', 'TURNER', 'lturner@jmail.com', 'LTURNER', 'Lturner@123'),
-    ('CHRIS', 'JONES', 'cjones@jmail.com', 'CJONES', 'Cjones@123'),
-    ('ADAM', 'BLAKE', 'ablake@jmail.com', 'ABLAKE', 'Ablake@123'),
-    ('ALLEN', 'LUGO', 'alugo@jmail.com', 'ALUGO', 'Alugo@123'),
-    ('ROSS', 'MILLER', 'rmiller@jmail.com', 'RMILLER', 'Rmiller@123'),
-    ('DAVID', 'AUSTIN', 'daustin@jmail.com', 'DAUSTIN', 'Daustin@123'),
-    ('MAT', 'HENRY', 'mhenry@jmail.com', 'MHENRY', 'Mhenry@123'),
-    ('RAVIN', 'PATEL', 'rpatel@jmail.com', 'RPATEL', 'Rpatel@123'),
-    ('AAKASH', 'CHOKSY', 'aakash@jmail.com', 'ACHOKSY', 'Achoksy@123');
+    ('john', 'deer', 'jdeer@jmail.com', 'JDEER', 'Jdeer@123'),
+    ('missy', 'rodriguez', 'jrodriguez@jmail.com', 'JRODRI', 'Jrodri@123'),
+    ('lionel', 'turner', 'lturner@jmail.com', 'LTURNER', 'Lturner@123'),
+    ('chris', 'jones', 'cjones@jmail.com', 'CJONES', 'Cjones@123'),
+    ('adam', 'blake', 'ablake@jmail.com', 'ABLAKE', 'Ablake@123'),
+    ('allen', 'lugo', 'alugo@jmail.com', 'ALUGO', 'Alugo@123'),
+    ('ross', 'miller', 'rmiller@jmail.com', 'RMILLER', 'Rmiller@123'),
+    ('david', 'austin', 'daustin@jmail.com', 'DAUSTIN', 'Daustin@123'),
+    ('mat', 'henry', 'mhenry@jmail.com', 'MHENRY', 'Mhenry@123'),
+    ('ravin', 'patel', 'rpatel@jmail.com', 'RPATEL', 'Rpatel@123'),
+    ('aakash', 'choksy', 'aakash@jmail.com', 'ACHOKSY', 'Achoksy@123');
 
 
 -- ADDRESS TABLE INSERT DATA

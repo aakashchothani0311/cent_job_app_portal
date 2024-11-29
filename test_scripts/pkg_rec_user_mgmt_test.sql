@@ -1,1 +1,65 @@
---
+-- Test script for PKG_JOB_REQ_MGMT.CREATE_JOB_REQ
+SET SERVEROUTPUT ON;
+BEGIN
+    UTIL_PKG.ADD_NEW_LINE('TESTING PKG_REC_USER_MGMT.CREATE_REC_USER PROCEDURE');
+    
+    DBMS_OUTPUT.PUT_LINE('1. Testing for NULL/EMPTY FIRSTNAME:');
+    CREATE_REC_USER('   ', 'JOHNSON', 'JOHN123', 'john123@jmail.com', 'JOHN123@', '11');
+    
+    DBMS_OUTPUT.PUT_LINE('2. Testing for NULL/EMPTY LASTNAME:');
+    CREATE_REC_USER('MARRIE', '    ' , 'JOHN123', 'john123@jmail.com', 'JOHN123@', '11');
+    
+    DBMS_OUTPUT.PUT_LINE('3. Testing for NULL/EMPTY USERNAME:');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , NULL , 'john123@jmail.com', 'JOHN123@', '11');
+    
+    DBMS_OUTPUT.PUT_LINE('4. Testing for DUPLICATE USERNAME:');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , 'Mark123' , 'john123@jmail.com', 'JOHN123@', '11');
+    
+    DBMS_OUTPUT.PUT_LINE('5. Testing for DUPLICATE EMAIL:');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , 'Marrie@123' , 'mark1234@jmail.com' , 'JOHN123@', '11');
+    
+    DBMS_OUTPUT.PUT_LINE('6. Testing for NULL/EMPTY PASSWORD:');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , 'Marrie@123' , 'mark12345@jmail.com' , NULL , '11');
+    
+    DBMS_OUTPUT.PUT_LINE('7. Testing for PASSWORD less than 8 characters.:');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , 'Marrie@123' , 'mark12345@jmail.com' , 'JOHN123' , '11');
+    
+    DBMS_OUTPUT.PUT_LINE('8. Testing for NULL/EMPTY COMPANY_ID :');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , 'Marrie@123' , 'mark12345@jmail.com' , 'JOHN123' , NULL);
+    
+    DBMS_OUTPUT.PUT_LINE('8. Testing for INVALID COMPANY_ID :');
+    CREATE_REC_USER('MARRIE', 'JOHNSON' , 'Marrie@123' , 'mark12345@jmail.com' , 'JOHN123' , '152');
+    
+    DBMS_OUTPUT.PUT_LINE('8. Valid data INSERTION : ');
+    CREATE_REC_USER('TOM', 'CRUISE' , 'Tom@123' , 'tom12345@jmail.com' , 'TOMCR123' , '10');
+END;
+/
+
+-- TESTING PKG_REC_USER_MGMT.UPDATE_REC_USER PROCEDURE
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('1. Testing for NULL/EMPTY FIRSTNAME:');
+    UPDATE_REC_USER(PI_FNAME => NULL, PI_USERNAME => 'Mark123');
+    
+    DBMS_OUTPUT.PUT_LINE('2. Testing for NULL/EMPTY LASTNAME:');
+    UPDATE_REC_USER(PI_LNAME => NULL, PI_USERNAME => 'Mark123');
+    
+    DBMS_OUTPUT.PUT_LINE('3. Testing for NULL/EMPTY USERNAME:');
+    UPDATE_REC_USER(PI_LNAME => 'MILLER', PI_USERNAME => NULL);
+    
+    DBMS_OUTPUT.PUT_LINE('4. Testing for INVALID USERNAME:');
+    UPDATE_REC_USER(PI_FNAME => 'MARK', PI_USERNAME => 'HAVFSJAHV');
+    
+    DBMS_OUTPUT.PUT_LINE('5. Testing for NULL/EMPTY PASSWORD');
+    UPDATE_REC_USER(PI_PASSWORD => '    ' , PI_USERNAME => 'Mark123');
+    
+    DBMS_OUTPUT.PUT_LINE('6. Testing for PASSWORD less than 8 characters.');
+    UPDATE_REC_USER(PI_PASSWORD => 'MARK123' , PI_USERNAME => 'Mark123');
+    
+    DBMS_OUTPUT.PUT_LINE('7. Updating FIRSTNAME and LASTNAME');
+    UPDATE_REC_USER(PI_FNAME => 'MARK_UPDATED', PI_LNAME => 'MILLER_UPDATED' , PI_USERNAME => 'Mark123');
+    
+    DBMS_OUTPUT.PUT_LINE('8. Updating PASSWORD');
+    UPDATE_REC_USER(PI_PASSWORD => 'JULIE@12345', PI_USERNAME => 'Mark123');
+    
+END;
+/
