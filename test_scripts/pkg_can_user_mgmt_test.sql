@@ -139,12 +139,15 @@ END;
 
 --Testing for PROCEDURE: DEACTIVATE_CANDIDATE
 BEGIN
+    UTIL_PKG.ADD_NEW_LINE('Testing of PKG_CANDIDATE_USER_MANAGEMENT.DEACTIVATE_CANDIDATE');
+    -- Testing 1: Valid Candidate ID  
+        DBMS_OUTPUT.PUT_LINE('1. Testing for valid Candidate ID Account Deactivation:-');
+    DEACTIVATE_CANDIDATE(3); 
+    
+    -- Testing 2: Invalid Candidate ID  
+        DBMS_OUTPUT.PUT_LINE('2. Testing for invalid Candidate ID Account Deactivation:-');
     DEACTIVATE_CANDIDATE(100); 
-    EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('Error: This candidate ID does not exists.');
-    WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: ' || SQLERRM);
+
 END;
 /
 
