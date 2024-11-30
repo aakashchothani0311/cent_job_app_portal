@@ -66,7 +66,7 @@ BEGIN
     REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_LNAME => 'MILLER', PI_UNAME => NULL);
     
     -- Testing 5: Invalid Username
-    DBMS_OUTPUT.PUT_LINE('5. Testing for null username:- ');
+    DBMS_OUTPUT.PUT_LINE('5. Testing for Invalid username:- ');
     REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_FNAME => 'MARK', PI_UNAME => 'HAVFSJAHV');
     
     -- Testing 6: Null Password
