@@ -7,6 +7,13 @@ CREATE OR REPLACE PACKAGE PKG_USER_MANAGEMENT AS
         PI_PW IN USERS.PASSWORD%TYPE
     ) RETURN NUMBER;
     
+    FUNCTION UPDATE_USER(
+        PI_FNAME IN USERS.FIRSTNAME%TYPE DEFAULT 'DEFAULT_FLAG',
+        PI_LNAME IN USERS.LASTNAME%TYPE DEFAULT 'DEFAULT_FLAG',
+        PI_UNAME IN USERS.USERNAME%TYPE,
+        PI_PW IN USERS.PASSWORD%TYPE DEFAULT 'DEFAULT_FLAG'
+    ) RETURN NUMBER;
+    
 END PKG_USER_MANAGEMENT;
 /
 
@@ -47,7 +54,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RAISE NULL_USERNAME_EXEC;
         END IF;
 
-        IF PI_PW IS NULL OR TRIM(PI_PW) IS NULL THEN
+        IF PI_PW IS NULL OR LENGTH(TRIM(PI_PW)) < 8  THEN
             RAISE NULL_PASSWORD_EXEC;
         END IF;
         
@@ -98,7 +105,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RETURN -1;
             
         WHEN NULL_PASSWORD_EXEC THEN 
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error creating candidate user profile: Password cannot be empty.'));
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error creating candidate user profile: Password cannot be empty or less than 8 characters.'));
             RETURN -1;
                    
         WHEN DUPLICATE_EMAIL_EXEC THEN
@@ -116,6 +123,94 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error Transactions if any are rolled back'));
             
     END CREATE_USER;
+    
+-- PROCEDURE FOR Updating User    
+    FUNCTION UPDATE_USER(
+        PI_FNAME IN USERS.FIRSTNAME%TYPE DEFAULT 'DEFAULT_FLAG',
+        PI_LNAME IN USERS.LASTNAME%TYPE DEFAULT 'DEFAULT_FLAG',
+        PI_UNAME IN USERS.USERNAME%TYPE,
+        PI_PW IN USERS.PASSWORD%TYPE DEFAULT 'DEFAULT_FLAG'
+    ) RETURN NUMBER IS  
+        V_COUNT NUMBER;
+        V_USER_ID USERS.USER_ID%TYPE;
+        
+        NULL_USERNAME_EXEC EXCEPTION;
+        NULL_FNAME_EXEC EXCEPTION;
+        NULL_LNAME_EXEC EXCEPTION;
+        NULL_PASSWORD_EXEC EXCEPTION;
+        USER_NOT_FOUND_EXEC EXCEPTION;
+        
+    BEGIN
+        -- Validate that username is not null or empty
+        IF PI_UNAME IS NULL OR TRIM(PI_UNAME) IS NULL THEN
+            RAISE NULL_USERNAME_EXEC;
+        END IF;
+    
+        -- Check if the user exists
+        SELECT COUNT(USER_ID) INTO V_USER_ID
+        FROM USERS
+        WHERE LOWER(USERNAME) = LOWER(PI_UNAME);
+        
+        IF V_USER_ID = 0 THEN
+            RAISE USER_NOT_FOUND_EXEC;
+        END IF;
+        
+        IF PI_FNAME IS NULL OR TRIM(PI_FNAME) IS NULL THEN
+            RAISE NULL_FNAME_EXEC;
+        END IF;
+        
+        IF PI_LNAME IS NULL OR TRIM(PI_LNAME) IS NULL THEN
+            RAISE NULL_LNAME_EXEC;
+        END IF;
+        
+        IF PI_PW IS NULL OR LENGTH(TRIM(PI_PW)) < 8 THEN
+            RAISE NULL_PASSWORD_EXEC;
+        END IF;
+        
+        -- Update the user
+        UPDATE USERS
+        SET
+            FIRSTNAME = CASE WHEN PI_FNAME != 'DEFAULT_FLAG' THEN LOWER(PI_FNAME) ELSE FIRSTNAME END,
+            LASTNAME = CASE WHEN PI_LNAME != 'DEFAULT_FLAG' THEN LOWER(PI_LNAME) ELSE LASTNAME END,
+            PASSWORD = CASE WHEN PI_PW != 'DEFAULT_FLAG' THEN PI_PW ELSE PASSWORD END
+        WHERE LOWER(USERNAME) = LOWER(PI_UNAME);
+        
+        IF SQL%ROWCOUNT > 0 THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('User Account updated successfully for User: ' || PI_UNAME));
+            COMMIT;
+            RETURN V_USER_ID;
+        END IF;
+    
+    EXCEPTION
+        WHEN NULL_USERNAME_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating User Account: Username cannot be empty.'));
+            RETURN -1;
+            
+        WHEN NULL_FNAME_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating FIRSTNAME: First name cannot be empty.'));
+            RETURN -1;
+            
+        WHEN NULL_LNAME_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating LASTNAME: Last name cannot be empty.'));
+            RETURN -1;
+            
+        WHEN NULL_PASSWORD_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating PASSWORD: Password cannot be empty or less than 8 characters.'));
+            RETURN -1;
+            
+        WHEN USER_NOT_FOUND_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating USERNAME: "' || PI_UNAME || '" DOES NOT EXIST.'));
+            RETURN -1;
+            
+        WHEN OTHERS THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating User Account: ' || SQLERRM));
+            RETURN -1;
+        ROLLBACK;
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error Transactions if any are rolled back.'));
+            
+    END UPDATE_USER;
+
+
 END PKG_USER_MANAGEMENT;
 /
         

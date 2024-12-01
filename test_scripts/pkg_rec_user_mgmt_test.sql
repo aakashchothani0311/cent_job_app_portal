@@ -66,12 +66,16 @@ BEGIN
     REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_LNAME => 'MILLER', PI_UNAME => NULL);
     
     -- Testing 5: Invalid Username
-    DBMS_OUTPUT.PUT_LINE('5. Testing for null username:- ');
+    DBMS_OUTPUT.PUT_LINE('5. Testing for Invalid username:- ');
     REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_FNAME => 'MARK', PI_UNAME => 'HAVFSJAHV');
     
     -- Testing 6: Null Password
     DBMS_OUTPUT.PUT_LINE('6. Testing for null password:- ');
     REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => '    ', PI_UNAME => 'Mark123');
+    
+    -- Testing 7: Password less than 8 characters
+    DBMS_OUTPUT.PUT_LINE('7. Testing for password less than 8 characters:- ');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => 'MARK!@', PI_UNAME => 'Mark123');
     
     COMMIT;
 END;
