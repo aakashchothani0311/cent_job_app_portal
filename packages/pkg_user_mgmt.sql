@@ -54,7 +54,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RAISE NULL_USERNAME_EXEC;
         END IF;
 
-        IF PI_PW IS NULL OR TRIM(PI_PW) IS NULL THEN
+        IF PI_PW IS NULL OR LENGTH(TRIM(PI_PW)) < 8  THEN
             RAISE NULL_PASSWORD_EXEC;
         END IF;
         
@@ -105,7 +105,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RETURN -1;
             
         WHEN NULL_PASSWORD_EXEC THEN 
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error creating candidate user profile: Password cannot be empty.'));
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error creating candidate user profile: Password cannot be empty or less than 8 characters.'));
             RETURN -1;
                    
         WHEN DUPLICATE_EMAIL_EXEC THEN
@@ -163,7 +163,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RAISE NULL_LNAME_EXEC;
         END IF;
         
-        IF PI_PW IS NULL OR TRIM(PI_PW) IS NULL THEN
+        IF PI_PW IS NULL OR LENGTH(TRIM(PI_PW)) < 8 THEN
             RAISE NULL_PASSWORD_EXEC;
         END IF;
         
@@ -195,7 +195,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RETURN -1;
             
         WHEN NULL_PASSWORD_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating PASSWORD: Password cannot be empty.'));
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating PASSWORD: Password cannot be empty or less than 8 characters.'));
             RETURN -1;
             
         WHEN USER_NOT_FOUND_EXEC THEN
