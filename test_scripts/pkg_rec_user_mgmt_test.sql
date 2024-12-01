@@ -73,6 +73,10 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('6. Testing for null password:- ');
     REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => '    ', PI_UNAME => 'Mark123');
     
+    -- Testing 7: Password less than 8 characters
+    DBMS_OUTPUT.PUT_LINE('7. Testing for password less than 8 characters:- ');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => 'MARK!@', PI_UNAME => 'Mark123');
+    
     COMMIT;
 END;
 /
