@@ -74,69 +74,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_RECRUITER_MANAGEMENT AS
         PI_UNAME IN USERS.USERNAME%TYPE,
         PI_PW IN USERS.PASSWORD%TYPE DEFAULT 'DEFAULT_FLAG'
     ) AS
-        V_USER_EXISTS NUMBER DEFAULT 0;
-        V_USER_DATA USERS%ROWTYPE;
-        
-        NULL_USERNAME_EXEC EXCEPTION;
-        NULL_FNAME_EXEC EXCEPTION;
-        NULL_LNAME_EXEC EXCEPTION;
-        NULL_PASSWORD_EXEC EXCEPTION;
+        V_USER_EXISTS NUMBER;
         
     BEGIN
-        IF PI_UNAME IS NULL OR LENGTH(TRIM(PI_UNAME)) IS NULL THEN
-            RAISE NULL_USERNAME_EXEC;
-        END IF;
-
-        BEGIN
-            SELECT * INTO V_USER_DATA
-            FROM USERS
-            WHERE LOWER(USERNAME) = LOWER(PI_UNAME);
-        EXCEPTION
-            WHEN NO_DATA_FOUND THEN
-                UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating USERNAME: "' || PI_UNAME || '" DOES NOT EXIST.'));
-                RETURN;
-        END;
-        
-        IF PI_FNAME IS NULL OR LENGTH(TRIM(PI_FNAME)) IS NULL THEN
-            RAISE NULL_FNAME_EXEC;
-            RETURN;
-        END IF;
-        
-        IF PI_LNAME IS NULL OR LENGTH(TRIM(PI_LNAME)) IS NULL THEN
-            RAISE NULL_LNAME_EXEC;
-            RETURN;
-        END IF;
-        
-        IF PI_PW IS NULL OR LENGTH(TRIM(PI_PW)) IS NULL THEN
-            RAISE NULL_PASSWORD_EXEC;
-            RETURN;
-        END IF;
-
-        UPDATE USERS
-        SET
-            FIRSTNAME = CASE WHEN PI_FNAME != 'DEFAULT_FLAG' AND PI_FNAME IS NOT NULL THEN PI_FNAME ELSE FIRSTNAME END,
-            LASTNAME = CASE WHEN PI_LNAME != 'DEFAULT_FLAG' AND PI_LNAME IS NOT NULL THEN PI_LNAME ELSE LASTNAME END,
-            PASSWORD = CASE WHEN PI_PW != 'DEFAULT_FLAG' AND PI_PW IS NOT NULL THEN PI_PW ELSE PASSWORD END
-        WHERE LOWER(USERNAME) = LOWER(PI_UNAME);
-
-        -- Output the result
-        IF SQL%ROWCOUNT > 0 THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('USER "' || PI_UNAME || '" UPDATED SUCCESSFULLY.'));
-            COMMIT;
+        V_USER_EXISTS := USER_MGMT.UPDATE_USER(PI_FNAME, PI_LNAME, PI_UNAME, PI_PW);
+       
+        IF V_USER_EXISTS = -1 THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Update failed for user: ' || PI_UNAME));
         ELSE
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('NO CHANGES WERE MADE TO THE USER.'));
-            ROLLBACK;
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Profile updated successfully for user: ' || PI_UNAME));
         END IF;
-
+        
     EXCEPTION
-        WHEN NULL_USERNAME_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating USERNAME: please give valid USERNAME to update.'));
-        WHEN NULL_FNAME_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating FIRSTNAME: First name cannot be empty.'));
-        WHEN NULL_LNAME_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating LASTNAME: Last name cannot be empty.'));
-        WHEN NULL_PASSWORD_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating PASSWORD: Password cannot be empty.'));
         WHEN OTHERS THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('ERROR: An unexpected error occurred while updating the user: ' || SQLERRM));
         ROLLBACK;
