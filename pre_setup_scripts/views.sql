@@ -11,7 +11,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW JOBS_APPLIED_HISTORY';
-        dbms_output.put_line('Materialized View "JOBS_APPLIED_HISTORY" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Materialized View "JOBS_APPLIED_HISTORY" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW JOBS_APPLIED_HISTORY
@@ -31,7 +31,7 @@ BEGIN
     JOIN COMPANIES COM ON JR.COMPANY_ID = COM.COMPANY_ID
     JOIN USERS U ON C.USER_ID = U.USER_ID';
         
-    dbms_output.put_line('Materialized View "JOBS_APPLIED_HISTORY" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Materialized View "JOBS_APPLIED_HISTORY" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -50,7 +50,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW JOBS_CREATED_HISTORY';
-        dbms_output.put_line('Materialized View "JOBS_CREATED_HISTORY" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Materialized View "JOBS_CREATED_HISTORY" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW JOBS_CREATED_HISTORY 
@@ -70,7 +70,7 @@ BEGIN
     JOIN COMPANIES COM ON JR.COMPANY_ID = COM.COMPANY_ID
     JOIN USERS U ON R.USER_ID = U.USER_ID';
         
-    dbms_output.put_line('Materialized View "JOBS_CREATED_HISTORY" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Materialized View "JOBS_CREATED_HISTORY" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -89,7 +89,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW CANDIDATES_JOBS_APPLIED';
-        dbms_output.put_line('Materialized View "CANDIDATES_JOBS_APPLIED" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Materialized View "CANDIDATES_JOBS_APPLIED" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW CANDIDATES_JOBS_APPLIED
@@ -97,7 +97,6 @@ BEGIN
     REFRESH COMPLETE 
     ON DEMAND AS
     SELECT
-    
         JR.REQ_ID,
         JR.JOB_TITLE,
         CA.CANDIDATE_ID,
@@ -111,7 +110,7 @@ BEGIN
     JOIN JOB_REQUISITION JR ON CA.REQ_ID = JR.REQ_ID
     JOIN USERS U ON C.USER_ID = U.USER_ID';
         
-    dbms_output.put_line('Materialized View "CANDIDATES_JOBS_APPLIED" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Materialized View "CANDIDATES_JOBS_APPLIED" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -130,7 +129,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW OPEN_JOBS';
-        dbms_output.put_line('Materialized View "OPEN_JOBS" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Materialized View "OPEN_JOBS" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW OPEN_JOBS
@@ -150,7 +149,7 @@ BEGIN
     JOIN COMPANIES COM ON JR.COMPANY_ID = COM.COMPANY_ID
     WHERE JR.STATUS = ''open''';
         
-    dbms_output.put_line('Materialized View "OPEN_JOBS" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Materialized View "OPEN_JOBS" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
@@ -169,7 +168,7 @@ BEGIN
     
     IF ROWS_COUNT > 0 THEN 
         EXECUTE IMMEDIATE 'DROP MATERIALIZED VIEW CANDIDATE_PROFILE';
-        dbms_output.put_line('Materialized View "CANDIDATE_PROFILE" dropped.');
+        DBMS_OUTPUT.PUT_LINE('Materialized View "CANDIDATE_PROFILE" dropped.');
     END IF;
     
     EXECUTE IMMEDIATE 'CREATE MATERIALIZED VIEW CANDIDATE_PROFILE
@@ -199,7 +198,7 @@ BEGIN
     JOIN SKILLS S ON CS.SKILL_ID = S.SKILL_ID
     GROUP BY C.CANDIDATE_ID, U.FIRSTNAME, U.LASTNAME, U.EMAIL, C.PHONE, C.AGE, C.GENDER, C.VETERAN, C.DISABILITY, C.DATE_OF_JOIN, A.STREET1, A.STREET2, A.CITY, A.STATE, A.ZIPCODE';
         
-    dbms_output.put_line('Materialized View "CANDIDATE_PROFILE" created successfully.');
+    DBMS_OUTPUT.PUT_LINE('Materialized View "CANDIDATE_PROFILE" created successfully.');
 EXCEPTION
     WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Something went wrong: Error Code ' || SQLCODE || ' - ' || SQLERRM);
