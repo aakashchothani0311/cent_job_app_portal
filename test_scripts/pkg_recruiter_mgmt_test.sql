@@ -84,5 +84,3 @@ BEGIN
     COMMIT;
 END;
 /
-
---SELECT * FROM USERS;
