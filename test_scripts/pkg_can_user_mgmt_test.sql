@@ -204,16 +204,21 @@ END;
 --Testing for PROCEDURE: DEACTIVATE_CANDIDATE
 BEGIN
     UTIL_PKG.ADD_NEW_LINE('Testing of PKG_CANDIDATE_MANAGEMENT.DEACTIVATE_CANDIDATE');
+    
     -- Testing 1: Valid Candidate ID  
     DBMS_OUTPUT.PUT_LINE('1. Testing for valid Candidate ID Account Deactivation:-');
     CAN_MGMT.DEACTIVATE_CANDIDATE(3); 
     
     -- Testing 2: Invalid Candidate ID  
     DBMS_OUTPUT.PUT_LINE('2. Testing for invalid Candidate ID Account Deactivation:-');
-    CAN_MGMT.DEACTIVATE_CANDIDATE(100); 
-
+    CAN_MGMT.DEACTIVATE_CANDIDATE(100);
+    
+    COMMIT;
 END;
 /
+
+SELECT * FROM USERS;
+SELECT * FROM CANDIDATES;
 
 --Testing for FUNCTION: Checking Candidate Account Status
 DECLARE

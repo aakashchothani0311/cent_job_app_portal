@@ -76,12 +76,27 @@ VALUES
 INSERT INTO RESUME 
     (CANDIDATE_ID, RES_DOC, DESCRIPTION)
 VALUES
-    (1, EMPTY_BLOB(), 'Frontend Developer Resume'),
-    (2, EMPTY_BLOB(), 'Financial Analyst Resume'),
-    (3, EMPTY_BLOB(), 'Robotics Engineer Resume'),
-    (4, EMPTY_BLOB(), 'Software Developer Resume'),
-    (5, EMPTY_BLOB(), 'Data Scientist Resume');
-
+    (1, 'TGVkIGEgdGVhbSBvZiA1IGluIGRldmVsb3BpbmcgYSBoaWdoLXBlcmZvcm1hbmNlIHNpbmdsZS1wYWdlIGFwcGxpY2F0aW9uIHVzaW5nIE5leHRKUyBhbmQgUmVhY3QsIHJlZHVjaW5nIGxvYWQgdGltZXMgYnkgMzAlLg==
+SW1wbGVtZW50ZWQgcmVzcG9uc2l2ZSBhbmQgYWNjZXNzaWJsZSBkZXNpZ24sIGVuc3VyaW5nIGNvbXBhdGliaWxpdHkgYWNyb3NzIG11bHRpcGxlIGRldmljZXMgYW5kIGJyb3dzZXJzLCBib29zdGluZyB1c2VyIGVuZ2FnZW1lbnQgYnkgMjUlLg==
+T3B0aW1pemVkIHdlYiBhcHBsaWNhdGlvbiBwZXJmb3JtYW5jZSBieSBpbnRlZ3JhdGluZyBhZHZhbmNlZCBKYXZhU2NyaXB0IGFuZCBUeXBlU2NyaXB0IHRlY2huaXF1ZXMsIGVuaGFuY2luZyBzcGVlZCBieSAyMCUu
+RGV2ZWxvcGVkIGFuZCBtYWludGFpbmVkIGNvZGUgcXVhbGl0eSB0aHJvdWdoIHJpZ29yb3VzIHRlc3RpbmcgYW5kIGRlYnVnZ2luZywgcmVkdWNpbmcgYnVnIHJhdGUgYnkgMTUlLg==
+TWVudG9yZWQganVuaW9yIGRldmVsb3BlcnMgaW4gZnJvbnQgZW5kIHRlY2hub2xvZ2llcywgaW1wcm92aW5nIHRlYW0gc2tpbGxzIGFuZCBwcm9qZWN0IGRlbGl2ZXJ5IHNwZWVkIGJ5IDQwJS4=', 'Frontend Developer Resume'),
+    (2, 'Q29uZHVjdGVkIGluLWRlcHRoIGZpbmFuY2lhbCBhbmFseXNpcywgaW5jbHVkaW5nIGZvcmVjYXN0aW5nIGFuZCB0cmVuZCBldmFsdWF0aW9ucywgdG8gc3VwcG9ydCBzdHJhdGVnaWMgZGVjaXNpb24tbWFraW5nIGFuZCBpbXByb3ZlIGNvc3QgZWZmaWNpZW5jeSBieSAxNSUu
+UHJlcGFyZWQgZGV0YWlsZWQgbW9udGhseSwgcXVhcnRlcmx5LCBhbmQgYW5udWFsIGZpbmFuY2lhbCByZXBvcnRzIGZvciBzZW5pb3IgbWFuYWdlbWVudCwgcHJvdmlkaW5nIGluc2lnaHRzIGludG8gcHJvZml0YWJpbGl0eSwgdmFyaWFuY2VzLCBhbmQgS1BJcy4=
+RGV2ZWxvcGVkIGZpbmFuY2lhbCBtb2RlbHMgdG8gYXNzZXNzIGludmVzdG1lbnQgb3Bwb3J0dW5pdGllcywgb3B0aW1pemluZyByZXNvdXJjZSBhbGxvY2F0aW9uIGFuZCBhY2hpZXZpbmcgYSAyMCUgaW5jcmVhc2UgaW4gUk9JLg==
+Q29sbGFib3JhdGVkIHdpdGggY3Jvc3MtZnVuY3Rpb25hbCB0ZWFtcyB0byBpbXBsZW1lbnQgYnVkZ2V0aW5nIHByb2Nlc3NlcywgcmVkdWNpbmcgb3ZlcmhlYWQgZXhwZW5zZXMgYnkgJDUwMEsgYW5udWFsbHku', 'Financial Analyst Resume'),
+    (3, 'RGVzaWduZWQgYW5kIHByb2dyYW1tZWQgcm9ib3RpYyBzeXN0ZW1zIGZvciBhdXRvbWF0aW9uIGluIG1hbnVmYWN0dXJpbmcsIGltcHJvdmluZyBhc3NlbWJseSBsaW5lIGVmZmljaWVuY3kgYnkgMzAlLg==
+RGV2ZWxvcGVkIGVsZWN0cmljYWwgYW5kIG1lY2hhbmljYWwgbGF5b3V0cyBmb3Igcm9ib3RpYyB3b3JrIGNlbGxzLCBlbnN1cmluZyBjb21wbGlhbmNlIHdpdGggc2FmZXR5IHN0YW5kYXJkcyBhbmQgb3BlcmF0aW9uYWwgcmVxdWlyZW1lbnRzLg==
+SW50ZWdyYXRlZCB2aXNpb24gc3lzdGVtcyBhbmQgYWR2YW5jZWQgc2Vuc29ycyBpbnRvIHJvYm90aWMgc29sdXRpb25zIHRvIGVuaGFuY2UgcHJlY2lzaW9uIGFuZCByZWxpYWJpbGl0eSBpbiBkeW5hbWljIGVudmlyb25tZW50cy4=
+TGVkIHRlc3RpbmcgYW5kIGRlYnVnZ2luZyBpbml0aWF0aXZlcywgcmVzb2x2aW5nIG9wZXJhdGlvbmFsIGVycm9ycyBhbmQgcmVkdWNpbmcgZG93bnRpbWUgYnkgMjUlLg==', 'Robotics Engineer Resume'),
+    (4, 'RGVzaWduZWQsIGRldmVsb3BlZCwgYW5kIG1haW50YWluZWQgd2ViIGFwcGxpY2F0aW9ucyB1c2luZyB0ZWNobm9sb2dpZXMgbGlrZSBKYXZhU2NyaXB0LCBSZWFjdCwgYW5kIFB5dGhvbiwgZW5oYW5jaW5nIHVzZXIgc2F0aXNmYWN0aW9uIGJ5IDQwJS4=
+QnVpbHQgYW5kIG9wdGltaXplZCBiYWNrZW5kIHN5c3RlbXMsIGluY2x1ZGluZyBkYXRhYmFzZSBzY2hlbWEgZGVzaWduIGFuZCBBUEkgaW50ZWdyYXRpb25zLCBpbXByb3ZpbmcgYXBwbGljYXRpb24gcGVyZm9ybWFuY2UgYnkgMjUlLg==
+Q29sbGFib3JhdGVkIHdpdGggY3Jvc3MtZnVuY3Rpb25hbCB0ZWFtcyBpbiBBZ2lsZSBlbnZpcm9ubWVudHMgdG8gZGVsaXZlciBoaWdoLXF1YWxpdHkgc29mdHdhcmUgd2l0aGluIHN0cmljdCBkZWFkbGluZXMu
+SW1wbGVtZW50ZWQgYXV0b21hdGVkIHRlc3RpbmcgcHJvdG9jb2xzLCBhY2hpZXZpbmcgYSA5NSUgcmVkdWN0aW9uIGluIHByb2R1Y3Rpb24gZGVmZWN0cy4=', 'Software Developer Resume'),
+    (5, 'RGV2ZWxvcGVkIHByZWRpY3RpdmUgbW9kZWxzIHVzaW5nIG1hY2hpbmUgbGVhcm5pbmcgYWxnb3JpdGhtcyAoZS5nLiwgUmFuZG9tIEZvcmVzdCwgWEdCb29zdCkgdG8gaW1wcm92ZSBjdXN0b21lciByZXRlbnRpb24gYnkgMjAlLg==
+QW5hbHl6ZWQgbGFyZ2UgZGF0YXNldHMgdG8gdW5jb3ZlciB0cmVuZHMgYW5kIGFjdGlvbmFibGUgaW5zaWdodHMsIGRyaXZpbmcgZGF0YS1pbmZvcm1lZCBkZWNpc2lvbnMgZm9yIGJ1c2luZXNzIGdyb3d0aC4=
+Q3JlYXRlZCBpbnRlcmFjdGl2ZSBkYXNoYm9hcmRzIGFuZCB2aXN1YWxpemF0aW9ucyB1c2luZyB0b29scyBsaWtlIFRhYmxlYXUgYW5kIFBvd2VyIEJJLCBlbmhhbmNpbmcgZXhlY3V0aXZlIGRlY2lzaW9uLW1ha2luZyBlZmZpY2llbmN5Lg==
+RGVwbG95ZWQgRVRMIHBpcGVsaW5lcyBmb3IgZGF0YSBwcmVwcm9jZXNzaW5nLCBlbnN1cmluZyBkYXRhIHF1YWxpdHkgYW5kIGltcHJvdmluZyBwcm9jZXNzaW5nIHNwZWVkIGJ5IDMwJS4=', 'Data Scientist Resume');
 
 -- SKILLS TABLE INSERT DATA
 INSERT INTO SKILLS 
@@ -200,24 +215,24 @@ VALUES
 
 -- CANDIDATE_APPLICATION TABLE INSERT DATA
 INSERT INTO CANDIDATE_APPLICATION 
-    (CANDIDATE_ID, REQ_ID, STATUS) 
+    (CANDIDATE_ID, REQ_ID, STATUS, RESUME_ID) 
 VALUES
-    (1, 3, 'submitted'),
-    (1, 6, 'in review'),
-    (2, 7, 'in review'),
-    (2, 8, 'in review'),
-    (2, 6, 'submitted'),
-    (3, 1, 'submitted'),
-    (3, 2, 'in review'),
-    (3, 5, 'in review'),
-    (3, 6, 'submitted'),
-    (4, 11, 'submitted'),
-    (4, 12, 'submitted'),
-    (4, 9, 'submitted'),
-    (4, 4, 'submitted'),
-    (4, 6, 'draft'),
-    (5, 3, 'submitted'),
-    (5, 6, 'draft'),
-    (5, 10, 'in review');
+    (1, 3, 'submitted',1),
+    (1, 6, 'in review',1),
+    (2, 7, 'in review',2),
+    (2, 8, 'in review',2),
+    (2, 6, 'submitted',2),
+    (3, 1, 'submitted',3),
+    (3, 2, 'in review',3),
+    (3, 5, 'in review',3),
+    (3, 6, 'submitted',3),
+    (4, 11, 'submitted',4),
+    (4, 12, 'submitted',4),
+    (4, 9, 'submitted',4),
+    (4, 4, 'submitted',4),
+    (4, 6, 'draft',4),
+    (5, 3, 'submitted',5),
+    (5, 6, 'draft',5),
+    (5, 10, 'in review',5);
 
 COMMIT;
