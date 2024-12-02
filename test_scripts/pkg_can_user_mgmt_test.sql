@@ -205,12 +205,12 @@ END;
 BEGIN
     UTIL_PKG.ADD_NEW_LINE('Testing of PKG_CANDIDATE_MANAGEMENT.DEACTIVATE_CANDIDATE');
     -- Testing 1: Valid Candidate ID  
-        DBMS_OUTPUT.PUT_LINE('1. Testing for valid Candidate ID Account Deactivation:-');
-    DEACTIVATE_CANDIDATE(3); 
+    DBMS_OUTPUT.PUT_LINE('1. Testing for valid Candidate ID Account Deactivation:-');
+    CAN_MGMT.DEACTIVATE_CANDIDATE(3); 
     
     -- Testing 2: Invalid Candidate ID  
-        DBMS_OUTPUT.PUT_LINE('2. Testing for invalid Candidate ID Account Deactivation:-');
-    DEACTIVATE_CANDIDATE(100); 
+    DBMS_OUTPUT.PUT_LINE('2. Testing for invalid Candidate ID Account Deactivation:-');
+    CAN_MGMT.DEACTIVATE_CANDIDATE(100); 
 
 END;
 /

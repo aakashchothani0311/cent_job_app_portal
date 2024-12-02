@@ -167,7 +167,6 @@ VALUES
     (1, 'IBM' , 'ibm@careers.com', '857-577-3433');
     
 
-
 -- RECRUITERS TABLE INSERT DATA
 INSERT INTO RECRUITERS 
     (USER_ID, COMPANY_ID) 
