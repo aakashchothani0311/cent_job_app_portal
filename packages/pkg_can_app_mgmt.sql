@@ -84,9 +84,57 @@ EXCEPTION
         
 END WITHDRAW_APP;
 /
-
-
 -- CAN ACCEPTS/ REJECTS (STATUS UPDATE)
+CREATE OR REPLACE PROCEDURE CANDIDATE_STATUS (
+    PI_CAN_ID IN CANDIDATE_APPLICATION.CANDIDATE_ID%TYPE, 
+    PI_REQ_ID IN CANDIDATE_APPLICATION.REQ_ID%TYPE, 
+    PI_STATUS IN CANDIDATE_APPLICATION.STATUS%TYPE
+) AS
+    V_STATUS CANDIDATE_APPLICATION.STATUS%TYPE;
+    
+    INVALID_STATUS_EXEC EXCEPTION;
+    NULL_APPLICATION_EXEC EXCEPTION;
+    
+BEGIN
+    IF PI_STATUS NOT IN ('offer accepted', 'offer rejected') THEN
+        RAISE INVALID_STATUS_EXEC;
+    END IF;
+    
+    BEGIN
+        SELECT STATUS INTO V_STATUS
+        FROM CANDIDATE_APPLICATION
+        WHERE CANDIDATE_ID = PI_CAN_ID AND REQ_ID = PI_REQ_ID;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE NULL_APPLICATION_EXEC;
+    END;
+
+    -- Update the application status to accepted or rejected
+    UPDATE CANDIDATE_APPLICATION
+    SET STATUS = PI_STATUS
+    WHERE CANDIDATE_ID = PI_CAN_ID AND REQ_ID = PI_REQ_ID;
+
+    IF SQL%ROWCOUNT > 0 THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Application for Candidate ID ' || PI_CAN_ID || ' updated successfully to status ' || PI_STATUS));
+    ELSE
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('No matching application found for Candidate ID ' || PI_CAN_ID || ' and Job Requisition ID ' || PI_REQ_ID));
+    END IF;
+
+EXCEPTION
+    WHEN INVALID_STATUS_EXEC THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error: Status must be "offer accepted" or "offer rejected" when the candidate updates the application.'));
+    WHEN NULL_APPLICATION_EXEC THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error: The candidate must submit an application before it can be accepted or rejected.')); 
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error in CANDIDATE_STATUS procedure: ' || SQLERRM);
+        RAISE;
+END CANDIDATE_STATUS;
+/
+
+
+
+
+
 -- RECRUITER MAKES AN OFFER/ REJECTS (STATUS UPDATE)
 
 
