@@ -93,8 +93,6 @@ CREATE OR REPLACE PACKAGE BODY PKG_RECRUITER_MANAGEMENT AS
             V_USER_EXISTS := USER_MGMT.UPDATE_USER(PI_FNAME, PI_LNAME, PI_UNAME, PI_PW);
            
             IF V_USER_EXISTS != -1 THEN
---                UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Update failed for user: ' || PI_UNAME));
---            ELSE
                 UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Profile updated successfully for user: ' || PI_UNAME));
             END IF;
         ELSE
