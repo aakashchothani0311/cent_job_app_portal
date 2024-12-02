@@ -47,4 +47,31 @@ BEGIN
 END;
 /
 
+-- Test script for PKG_CAN_APP_MGMT.UPDATE_APPLICATION_STATUS
+BEGIN
+    UTIL_PKG.ADD_NEW_LINE('Testing UPDATE_APPLICATION_STATUS Procedure');
+
+    -- Test 1: Valid update
+    DBMS_OUTPUT.PUT_LINE('Test 1: Updating application status to "offer".');
+    UPDATE_APPLICATION_STATUS(1, 6, 'candidate rejected');
+
+    -- Test 2: Invalid status
+    DBMS_OUTPUT.PUT_LINE('Test 2: Updating application with invalid status.');
+    UPDATE_APPLICATION_STATUS(1, 3, 'withdrawn');
+
+    -- Test 3: Invalid Candidate ID
+    DBMS_OUTPUT.PUT_LINE('Test 3: Updating application with invalid Candidate ID.');
+    UPDATE_APPLICATION_STATUS(10990, 5, 'candidate rejected');
+
+    -- Test 4: Invalid Requisition ID
+    DBMS_OUTPUT.PUT_LINE('Test 4: Updating application with invalid Requisition ID.');
+    UPDATE_APPLICATION_STATUS(4, 10098, 'role offered');
+
+    -- Test 5: No matching application
+    DBMS_OUTPUT.PUT_LINE('Test 5: No matching application for the given Candidate ID and Requisition ID.');
+    UPDATE_APPLICATION_STATUS(4, 2, 'role offered');
+END;
+/
+
+
 select * from candidate_application;
