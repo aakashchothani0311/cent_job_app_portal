@@ -234,8 +234,11 @@ EXCEPTION
         UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error cancelling candidate applciations: ' || SQLERRM));
         ROLLBACK;
         UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error, transactions if any are rolled back.'));
+        
 END;
 /
 
 
-CREATE OR REPLACE SYNONYM JOB_REQ_MGMT FOR ADMIN_SUPER_USER.PKG_JOB_REQ_MGMT;
+-- Create Synonym for the package
+CREATE OR REPLACE SYNONYM JOB_REQ_MGMT
+FOR ADMIN_SUPER_USER.PKG_JOB_REQ_MGMT;

@@ -74,22 +74,40 @@ CREATE OR REPLACE PACKAGE BODY PKG_RECRUITER_MANAGEMENT AS
         PI_UNAME IN USERS.USERNAME%TYPE,
         PI_PW IN USERS.PASSWORD%TYPE DEFAULT 'DEFAULT_FLAG'
     ) AS
-        V_USER_EXISTS NUMBER;
+        V_USER_EXISTS NUMBER DEFAULT 0;
         
-    BEGIN
-        V_USER_EXISTS := USER_MGMT.UPDATE_USER(PI_FNAME, PI_LNAME, PI_UNAME, PI_PW);
-       
-        IF V_USER_EXISTS = -1 THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Update failed for user: ' || PI_UNAME));
+        NULL_USERNAME_EXEC EXCEPTION;
+        
+   BEGIN
+        IF PI_UNAME IS NULL OR TRIM(PI_UNAME) IS NULL THEN
+            RAISE NULL_USERNAME_EXEC;
+        END IF;
+        
+        -- Check if the recruiter exists
+        SELECT COUNT(U.USER_ID) INTO V_USER_EXISTS
+        FROM USERS U
+        JOIN RECRUITERS R ON U.USER_ID = R.USER_ID
+        WHERE LOWER(U.USERNAME) = LOWER(PI_UNAME);
+        
+        IF V_USER_EXISTS > 0 THEN
+            V_USER_EXISTS := USER_MGMT.UPDATE_USER(PI_FNAME, PI_LNAME, PI_UNAME, PI_PW);
+           
+            IF V_USER_EXISTS != -1 THEN
+                UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Profile updated successfully for user: ' || PI_UNAME));
+            END IF;
         ELSE
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Profile updated successfully for user: ' || PI_UNAME));
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Update failed for user: ' || PI_UNAME || ' DOES NOT EXIST'));
         END IF;
         
     EXCEPTION
+        WHEN NULL_USERNAME_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating User Account: Username cannot be empty.'));
+            
         WHEN OTHERS THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('ERROR: An unexpected error occurred while updating the user: ' || SQLERRM));
-        ROLLBACK;
+            ROLLBACK; 
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error Transactions if any are rolled back'));
+            
     END UPDATE_RECRUITER_PROFILE;
 
 END PKG_RECRUITER_MANAGEMENT;
