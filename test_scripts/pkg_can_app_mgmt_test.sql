@@ -28,4 +28,23 @@ BEGIN
 END;
 /
 
+-- Test script for PKG_CAN_APP_MGMT.CANDIDATE_STATUS Procedure
+BEGIN
+    UTIL_PKG.ADD_NEW_LINE('TESTING CANDIDATE_STATUS PROCEDURE');
+    
+    -- 1. Test for updating candidate_status successfully
+    DBMS_OUTPUT.PUT_LINE('1. Testing for candidate status successfully updated.');
+    CANDIDATE_STATUS(2, 8, 'offer accepted');
+    
+    -- 2. Test for valid CANDIDATE_ID and REQ_ID
+    DBMS_OUTPUT.PUT_LINE('2. Testing for valid candidate_id and req_id');
+    CANDIDATE_STATUS(9, 3, 'offer accepted');
+    
+    -- 3. Test for Invalid candidate_status
+    DBMS_OUTPUT.PUT_LINE('3. Testing for Invalid candidate status');
+    CANDIDATE_STATUS(2, 8, 'accepted');
+    
+END;
+/
+
 select * from candidate_application;
