@@ -139,11 +139,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
         NULL_LNAME_EXEC EXCEPTION;
         NULL_PASSWORD_EXEC EXCEPTION;
         USER_NOT_FOUND_EXEC EXCEPTION;
+        NO_UPDATED_FIELDS_EXEC EXCEPTION;
         
     BEGIN
         -- Validate that username is not null or empty
         IF PI_UNAME IS NULL OR TRIM(PI_UNAME) IS NULL THEN
             RAISE NULL_USERNAME_EXEC;
+        END IF;
+        
+        IF PI_FNAME = 'DEFAULT_FLAG' AND PI_LNAME = 'DEFAULT_FLAG' AND PI_PW = 'DEFAULT_FLAG' THEN
+            RAISE NO_UPDATED_FIELDS_EXEC;
         END IF;
     
         -- Check if the user exists
@@ -184,6 +189,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
     EXCEPTION
         WHEN NULL_USERNAME_EXEC THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating User Account: Username cannot be empty.'));
+            RETURN -1;
+        
+        WHEN NO_UPDATED_FIELDS_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating User Account: No value to update.'));
             RETURN -1;
             
         WHEN NULL_FNAME_EXEC THEN
