@@ -8,15 +8,15 @@ BEGIN
     
     -- Testing 2: Duplicate Email
     DBMS_OUTPUT.PUT_LINE('2. Testing for duplicate email id constraint:-');
-    REC_MGMT.CREATE_RECRUITER_PROFILE('MARRIE', 'JOHNSON' , 'Marrie@123' , 'mark1234@jmail.com' , 'JOHN123@', '11');
+    REC_MGMT.CREATE_RECRUITER_PROFILE('ALLEN', 'LUGO' , 'alugo@jmail.com', 'ALLEN' , 'Alugo@123', '11');
     
     -- Testing 3: Duplicate Username
     DBMS_OUTPUT.PUT_LINE('3. Testing for duplicate username constraint:-');
-    REC_MGMT.CREATE_RECRUITER_PROFILE('MARRIE', 'JOHNSON' , 'john12345566@jmail.com', 'Mark123', 'JOHN123@', '11');
+    REC_MGMT.CREATE_RECRUITER_PROFILE('ALLEN', 'LUGO' , 'allen@jmail.com', 'ALUGO' , 'Alugo@123', '11');
     
     -- Testing 4: Null First Name 
     DBMS_OUTPUT.PUT_LINE('4. Testing for null value in firstname:-');
-    REC_MGMT.CREATE_RECRUITER_PROFILE(NULL, 'JOHNSON', 'john123@jmail.com', 'JOHN123', 'JOHN123@', '11');
+    REC_MGMT.CREATE_RECRUITER_PROFILE(NULL, 'LUGO', 'john123@jmail.com', 'JOHN123', 'JOHN123@', '11');
         
     -- Testing 5: Null Last Name 
     DBMS_OUTPUT.PUT_LINE('5. Testing for null value in last name:-');
@@ -55,11 +55,11 @@ BEGIN
     
     -- Testing 2: Null Firstname
     DBMS_OUTPUT.PUT_LINE('2. Testing for null firstname:- ');
-    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_FNAME => NULL, PI_UNAME => 'Mark123');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_FNAME => NULL, PI_UNAME => 'ALUGO');
     
     -- Testing 3: Null Lastname
     DBMS_OUTPUT.PUT_LINE('3. Testing for null lastname:- ');
-    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_LNAME => NULL, PI_UNAME => 'Mark123');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_LNAME => NULL, PI_UNAME => 'ALUGO');
     
     -- Testing 4: Null Username
     DBMS_OUTPUT.PUT_LINE('4. Testing for null username:- ');
@@ -71,15 +71,15 @@ BEGIN
     
     -- Testing 6: Null Password
     DBMS_OUTPUT.PUT_LINE('6. Testing for null password:- ');
-    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => NULL, PI_UNAME => 'Mark123');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => NULL, PI_UNAME => 'ALUGO');
     
     -- Testing 7: Password less than 8 characters
     DBMS_OUTPUT.PUT_LINE('7. Testing for password less than 8 characters:- ');
-    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => 'MARK!@', PI_UNAME => 'Mark123');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_PW => 'MARK!@', PI_UNAME => 'ALUGO');
     
     -- Testing 8: Testing for passing only username
-    DBMS_OUTPUT.PUT_LINE('8. No updating fields provided with username:- ');
-    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_UNAME => 'Mark123');
+    DBMS_OUTPUT.PUT_LINE('8. Testing for No updating fields provided with username:- ');
+    REC_MGMT.UPDATE_RECRUITER_PROFILE(PI_UNAME => 'ALUGO');
     
     COMMIT;
 END;
