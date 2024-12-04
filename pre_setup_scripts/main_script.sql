@@ -1,3 +1,4 @@
+SET SERVEROUTPUT ON;
 -- USER table cleanup with creation 
 DECLARE
     ROWS_COUNT NUMBER;
