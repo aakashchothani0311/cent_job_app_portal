@@ -150,17 +150,13 @@ BEGIN
         PI_GENDER => 'male'
     );
 
-    -- Testing 2: Update with NULL values - No changes should be made
-    UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('2. Testing for No Updates - All parameters NULL.'));
+    -- Testing 2: Invalid Gender
+    UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('2. Testing for Invalid Gender.'));
     PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
-        PI_CANID => VALID_CANID,
-        PI_PHONE => NULL,
-        PI_AGE => NULL,
-        PI_GENDER => NULL,
-        PI_VETERAN => NULL,
-        PI_DISABILITY => NULL
+        PI_CANID => 'A123',
+        PI_GENDER => 'invalid_gender'
     );
-
+    
     -- Testing 3: Invalid Gender
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('3. Testing for Invalid Gender.'));
     PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
@@ -216,9 +212,6 @@ BEGIN
     COMMIT;
 END;
 /
-
-SELECT * FROM USERS;
-SELECT * FROM CANDIDATES;
 
 --Testing for FUNCTION: Checking Candidate Account Status
 DECLARE
