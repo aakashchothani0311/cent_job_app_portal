@@ -20,7 +20,7 @@ CREATE OR REPLACE PACKAGE PKG_CANDIDATE_MANAGEMENT AS
     );
     
     PROCEDURE UPDATE_CANDIDATE_PROFILE(
-        PI_CANID IN CANDIDATES.CANDIDATE_ID%TYPE,
+        PI_CANID IN VARCHAR2,
         PI_PHONE IN CANDIDATES.PHONE%TYPE DEFAULT NULL,
         PI_AGE IN CANDIDATES.AGE%TYPE DEFAULT NULL,
         PI_GENDER IN CANDIDATES.GENDER%TYPE DEFAULT NULL,
@@ -59,7 +59,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
         PI_VETERAN IN CANDIDATES.VETERAN%TYPE,
         PI_DISABILITY IN CANDIDATES.DISABILITY%TYPE
     ) AS
-        V_COUNT NUMBER;
+        V_COUNT NUMBER := 0;
         V_USER_ID NUMBER := -1;
         V_ADDRESS_ID NUMBER := -1;
         
@@ -76,13 +76,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
             RAISE INVALID_AGE_EXEC;
         END IF;
         
-        IF PI_VETERAN IS NULL OR TRIM(PI_VETERAN) IS NULL OR PI_VETERAN NOT IN 
-        ('do not wish to disclose','not a veteran','I am a protected veteran')
+        IF PI_VETERAN IS NULL OR TRIM(PI_VETERAN) IS NULL OR PI_VETERAN NOT IN ('do not wish to disclose', 'not a veteran', 'I am a protected veteran')
           THEN  RAISE INVALID_VETERAN_EXEC;
         END IF;
         
-        IF PI_DISABILITY IS NULL OR TRIM(PI_DISABILITY) IS NULL OR PI_DISABILITY NOT IN
-        ('do not wish to disclose','no, i do not have a disability','yes, I have a disability')
+        IF PI_DISABILITY IS NULL OR TRIM(PI_DISABILITY) IS NULL OR PI_DISABILITY NOT IN ('do not wish to disclose', 'no, i do not have a disability', 'yes, I have a disability')
             THEN RAISE INVALID_DISABILITY_EXEC;
         END IF;
             
@@ -128,7 +126,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
 
    -- PROCEDURE FOR UPDATING CANDIDATE PROFILE
     PROCEDURE UPDATE_CANDIDATE_PROFILE(
-        PI_CANID IN CANDIDATES.CANDIDATE_ID%TYPE,
+        PI_CANID IN VARCHAR2,
         PI_PHONE IN CANDIDATES.PHONE%TYPE DEFAULT NULL,
         PI_AGE IN CANDIDATES.AGE%TYPE DEFAULT NULL,
         PI_GENDER IN CANDIDATES.GENDER%TYPE DEFAULT NULL,
@@ -178,11 +176,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
         -- Update CANDIDATES table
         UPDATE CANDIDATES
         SET
-            PHONE = COALESCE(PI_PHONE, PHONE),
-            AGE = COALESCE(PI_AGE, AGE),
-            GENDER = COALESCE(PI_GENDER, GENDER),
-            VETERAN = COALESCE(PI_VETERAN, VETERAN),
-            DISABILITY = COALESCE(PI_DISABILITY, DISABILITY)
+            PHONE = NVL(PI_PHONE, PHONE),
+            AGE = NVL(PI_AGE, AGE),
+            GENDER = NVL(PI_GENDER, GENDER),
+            VETERAN = NVL(PI_VETERAN, VETERAN),
+            DISABILITY = NVL(PI_DISABILITY, DISABILITY)
         WHERE CANDIDATE_ID = PI_CANID;
     
         -- Output the result
@@ -194,6 +192,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
         END IF;
     
     EXCEPTION
+        WHEN INVALID_FORMAT_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating candidate profile: Invalid format.'));
+        
         WHEN INVALID_GENDER_EXEC THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating candidate profile: Gender must be "male" or "female".'));
             
@@ -205,9 +206,6 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
             
         WHEN INVALID_DISABILITY_EXEC THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating candidate profile: Invalid disability status.'));
-            
-        WHEN INVALID_FORMAT_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating candidate profile: Invalid format.'));
             
         WHEN OTHERS THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating candidate profile: ' || SQLERRM));
