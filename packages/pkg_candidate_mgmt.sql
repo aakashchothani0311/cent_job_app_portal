@@ -59,7 +59,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
         PI_VETERAN IN CANDIDATES.VETERAN%TYPE,
         PI_DISABILITY IN CANDIDATES.DISABILITY%TYPE
     ) AS
-        V_COUNT NUMBER;
+        V_COUNT NUMBER := 0;
         V_USER_ID NUMBER := -1;
         V_ADDRESS_ID NUMBER := -1;
         
@@ -76,13 +76,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
             RAISE INVALID_AGE_EXEC;
         END IF;
         
-        IF PI_VETERAN IS NULL OR TRIM(PI_VETERAN) IS NULL OR PI_VETERAN NOT IN 
-        ('do not wish to disclose','not a veteran','I am a protected veteran')
+        IF PI_VETERAN IS NULL OR TRIM(PI_VETERAN) IS NULL OR PI_VETERAN NOT IN ('do not wish to disclose', 'not a veteran', 'I am a protected veteran')
           THEN  RAISE INVALID_VETERAN_EXEC;
         END IF;
         
-        IF PI_DISABILITY IS NULL OR TRIM(PI_DISABILITY) IS NULL OR PI_DISABILITY NOT IN
-        ('do not wish to disclose','no, i do not have a disability','yes, I have a disability')
+        IF PI_DISABILITY IS NULL OR TRIM(PI_DISABILITY) IS NULL OR PI_DISABILITY NOT IN ('do not wish to disclose', 'no, i do not have a disability', 'yes, I have a disability')
             THEN RAISE INVALID_DISABILITY_EXEC;
         END IF;
             
