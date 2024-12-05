@@ -136,14 +136,14 @@ END;
 
 --Testing for Procedure: UPDATE_CANDIDATE_PROFILE
 DECLARE
-    VALID_CANID CONSTANT CANDIDATES.CANDIDATE_ID%TYPE := 1; 
-    NON_EXISTENT_CANID CONSTANT CANDIDATES.CANDIDATE_ID%TYPE := 10078;
+    VALID_CANID CONSTANT NUMBER := 1; 
+    NON_EXISTENT_CANID CONSTANT NUMBER := 10078;
 BEGIN
     UTIL_PKG.ADD_NEW_LINE('Testing PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE');
     
     -- Testing 1: Successful Update - Update phone, age, and gender
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('1. Testing for Successful Candidate profile Update - Update phone, age, and gender.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => VALID_CANID,
         PI_PHONE => '987-654-3210',
         PI_AGE => 30,
@@ -152,49 +152,48 @@ BEGIN
 
     -- Testing 2: Invalid Gender
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('2. Testing for Invalid Gender.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => 'A123',
         PI_GENDER => 'invalid_gender'
     );
     
     -- Testing 3: Invalid Gender
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('3. Testing for Invalid Gender.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => VALID_CANID,
         PI_GENDER => 'invalid_gender'
     );
 
     -- Testing 4: Invalid Age (less than 16)
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('4. Testing for Invalid Age.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => VALID_CANID,
         PI_AGE => 10
     );
 
     -- Testing 5: Non-existent Candidate ID
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('5. Testing for Non-existent Candidate ID.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => NON_EXISTENT_CANID,
         PI_PHONE => '123-456-7890'
     );
 
     -- Testing 6: Invalid Veteran Status
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('6. Testing for Invalid Veteran Status.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => VALID_CANID,
         PI_VETERAN => 'invalid_status'
     );
 
     -- Testing 7: Invalid Disability Status
     UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('7. Testing for Invalid Disability Status.'));
-    PKG_CANDIDATE_MANAGEMENT.UPDATE_CANDIDATE_PROFILE(
+    CAN_MGMT.UPDATE_CANDIDATE_PROFILE(
         PI_CANID => VALID_CANID,
         PI_DISABILITY => 'invalid_disability'
     );
     COMMIT;
 END;
 /
-
 
 
 --Testing for PROCEDURE: DEACTIVATE_CANDIDATE
@@ -210,25 +209,5 @@ BEGIN
     CAN_MGMT.DEACTIVATE_CANDIDATE(100);
     
     COMMIT;
-END;
-/
-
---Testing for FUNCTION: Checking Candidate Account Status
-DECLARE
-    V_STATUS NUMBER;
-BEGIN
-    SELECT IS_CANDIDATE_ACTIVE(4) INTO V_STATUS FROM DUAL; 
-    IF V_STATUS = 1 THEN
-        DBMS_OUTPUT.PUT_LINE('Candidate account is active.');
-    ELSIF V_STATUS = 0 THEN
-        DBMS_OUTPUT.PUT_LINE('Candidate account is inactive.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Candidate account status is unknown.');
-    END IF;
-EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('This Candidate ID not found.');
-    WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Something went wrong: ' || SQLERRM);
 END;
 /

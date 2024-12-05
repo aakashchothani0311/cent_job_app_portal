@@ -223,30 +223,48 @@ END PKG_CAN_APP_MGMT;
 CREATE OR REPLACE TRIGGER BEFORE_CAN_APP_UPDATE
 AFTER UPDATE ON JOB_REQUISITION
 FOR EACH ROW
+DECLARE
+    DRAFT_UPDATE_EXEC EXCEPTION;
+    SUBMITTED_STATUS_EXEC EXCEPTION;
+    STATUS_EXEC EXCEPTION;
+    NOT_RECRUITER_EXEC EXCEPTION;
 BEGIN
-    /*IF STATUS IS 'draft', only candidate can update.
-    IF SUBMITTED, CANDIDATE CAN ONLY UPDATE STATUS TO WITHDRAWN
-    IF 'requisition closed/ transfered', WITHDRAWN, NOBODY SHOULD BE ABLE TO UPDATE ANYTHING,
-    else ONLY RECRUITER CAN UPDATE STATUS COLUMN  */
+    -- If STATUS is 'draft', only candidate can update.
+    IF :NEW.STATUS = 'draft' AND USER != 'candidate' THEN
+        RAISE DRAFT_UPDATE_EXEC;
     
-    IF :NEW.STATUS = 'draft' AND :USER != 'candidate' THEN
-        RAISE;
+    -- If status is 'submitted', candidates can only update status to 'withdrawn'.
     ELSIF :OLD.STATUS = 'submitted' AND :NEW.STATUS != :OLD.STATUS THEN
-        IF :USER != 'candidate' OR :NEW.STATUS != 'withdrawn' THEN
-            RAISE_APPLICATION_ERROR(-20002, 'Candidates can only update the status to "withdrawn" when the status is "submitted".');
+        IF USER != 'candidate' OR :NEW.STATUS != 'withdrawn' THEN
+            RAISE SUBMITTED_STATUS_EXEC;
         END IF;
+    
+    -- If status is 'requisition closed', 'transferred', or 'withdrawn', no updates are allowed.
     ELSIF :NEW.STATUS IN ('requisition closed', 'transferred', 'withdrawn') THEN
-        RAISE;
-    ELSIF :USER != 'recruiter' THEN
-        RAISE;
+        RAISE STATUS_EXEC;
+    
+    -- For all other cases, only recruiters can update the status column.
+    ELSIF USER != 'recruiter' THEN
+        RAISE NOT_RECRUITER_EXEC;
     END IF;
 
+EXCEPTION
+    WHEN DRAFT_UPDATE_EXEC THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Only candidates can access this field'));
+        
+    WHEN SUBMITTED_STATUS_EXEC THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Candidates can only update the status to "withdrawn" when the status is "submitted.'));
+    WHEN STATUS_EXEC THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Updates are not allowed when the status is "requisition closed", "transferred", or "withdrawn".'));
+    WHEN NOT_RECRUITER_EXEC THEN
+        UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Only recruiters can update the status column.'));
 END;
 /
 
 
+
 -- Create Synonym for the package
-CREATE OR REPLACE SYNONYM CAN_APP_MGMT
+CREATE OR REPLACE PUBLIC SYNONYM CAN_APP_MGMT
 FOR ADMIN_SUPER_USER.PKG_CAN_APP_MGMT;
 
 
