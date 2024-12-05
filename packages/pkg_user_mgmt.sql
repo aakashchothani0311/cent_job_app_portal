@@ -209,7 +209,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_USER_MANAGEMENT AS
             RETURN V_USER_ID;
             
         WHEN USER_NOT_FOUND_EXEC THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating USERNAME: "' || PI_UNAME || '" does not exist.'));
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating USER: "' || PI_UNAME || '" does not exist.'));
             RETURN V_USER_ID;
             
         WHEN OTHERS THEN

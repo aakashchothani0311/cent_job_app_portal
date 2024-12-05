@@ -31,10 +31,6 @@ CREATE OR REPLACE PACKAGE PKG_CANDIDATE_MANAGEMENT AS
     PROCEDURE DEACTIVATE_CANDIDATE(
         PI_CANDIDATE_ID IN CANDIDATES.CANDIDATE_ID%TYPE
     );
-    
-    FUNCTION IS_CANDIDATE_ACTIVE(
-        PI_CANDIDATE_ID IN CANDIDATES.CANDIDATE_ID%TYPE
-    ) RETURN NUMBER;
 END PKG_CANDIDATE_MANAGEMENT;
 /
 
@@ -76,12 +72,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
             RAISE INVALID_AGE_EXEC;
         END IF;
         
-        IF PI_VETERAN IS NULL OR TRIM(PI_VETERAN) IS NULL OR PI_VETERAN NOT IN ('do not wish to disclose', 'not a veteran', 'I am a protected veteran')
-          THEN  RAISE INVALID_VETERAN_EXEC;
+        IF PI_VETERAN IS NULL OR TRIM(PI_VETERAN) IS NULL OR PI_VETERAN NOT IN ('do not wish to disclose', 'not a veteran', 'I am a protected veteran') THEN
+            RAISE INVALID_VETERAN_EXEC;
         END IF;
         
-        IF PI_DISABILITY IS NULL OR TRIM(PI_DISABILITY) IS NULL OR PI_DISABILITY NOT IN ('do not wish to disclose', 'no, i do not have a disability', 'yes, I have a disability')
-            THEN RAISE INVALID_DISABILITY_EXEC;
+        IF PI_DISABILITY IS NULL OR TRIM(PI_DISABILITY) IS NULL OR PI_DISABILITY NOT IN ('do not wish to disclose', 'no, i do not have a disability', 'yes, I have a disability') THEN
+            RAISE INVALID_DISABILITY_EXEC;
         END IF;
             
         -- Insert into USERS table
@@ -92,12 +88,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
             V_ADDRESS_ID := ADD_MGMT.CREATE_ADDRESS(PI_ST1, PI_ST2, PI_CITY, PI_STATE, PI_ZIP, PI_COUNTRY);
             IF V_ADDRESS_ID != -1 THEN
                 -- Insert into CANDIDATES table
-                INSERT INTO CANDIDATES (USER_ID, ADD_ID, PHONE, AGE, GENDER)
-                VALUES (V_USER_ID, V_ADDRESS_ID, PI_PHONE, PI_AGE, PI_GENDER);
+                INSERT INTO CANDIDATES
+                    (USER_ID, ADD_ID, PHONE, AGE, GENDER)
+                VALUES
+                    (V_USER_ID, V_ADDRESS_ID, PI_PHONE, PI_AGE, PI_GENDER);
                 
                 UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Candidate profile created successfully. User ID: ' || V_USER_ID));
             ELSE
-                UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error Transactions are rolled back'));
+                UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error, transactions if any are rolled back'));
                 ROLLBACK;
             END IF;
         END IF;
@@ -135,6 +133,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
     ) AS
         V_COUNT NUMBER;
         
+        INVALID_CAND_ID_EXEC EXCEPTION;
         INVALID_GENDER_EXEC EXCEPTION;
         INVALID_AGE_EXEC EXCEPTION;
         INVALID_VETERAN_EXEC EXCEPTION;
@@ -144,12 +143,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
         -- Check if Candidate ID exists
         SELECT COUNT(CANDIDATE_ID)
         INTO V_COUNT
-        FROM CANDIDATES
-        WHERE CANDIDATE_ID = PI_CANID;
+        FROM CANDIDATES C
+        JOIN USERS U ON C.USER_ID = U.USER_ID
+        WHERE CANDIDATE_ID = PI_CANID
+        AND U.IS_ACTIVE = 1;
     
         IF V_COUNT = 0 THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error: Candidate ID ' || PI_CANID || ' does not exist.'));
-            RETURN;
+            RAISE INVALID_CAND_ID_EXEC;
         END IF;
     
         IF NOT REGEXP_LIKE(PI_CANID, '^[0-9]+$') THEN
@@ -192,6 +192,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
         END IF;
     
     EXCEPTION
+        WHEN INVALID_CAND_ID_EXEC THEN
+            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error: Candidate ID ' || PI_CANID || ' does not exist or the candidate is inactive.'));
+            
         WHEN INVALID_FORMAT_EXEC THEN
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error updating candidate profile: Invalid format.'));
         
@@ -260,42 +263,6 @@ CREATE OR REPLACE PACKAGE BODY PKG_CANDIDATE_MANAGEMENT AS
             UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Due to an error, transactions if any are rolled back.'));
             
     END DEACTIVATE_CANDIDATE;
-
-    -- FUNCTION FOR Checking if a Candidate is active in our database
-    FUNCTION IS_CANDIDATE_ACTIVE(
-        PI_CANDIDATE_ID IN CANDIDATES.CANDIDATE_ID%TYPE
-    ) RETURN NUMBER AS
-        V_IS_ACTIVE USERS.IS_ACTIVE%TYPE DEFAULT -1;
-        
-        NULL_CANDIDATE_ID EXCEPTION;
-    BEGIN
-        IF PI_CANDIDATE_ID IS NULL THEN 
-            RAISE NULL_CANDIDATE_ID;
-        END IF;
-        
-        SELECT U.IS_ACTIVE
-        INTO V_IS_ACTIVE
-        FROM USERS U
-        JOIN CANDIDATES C 
-        ON U.USER_ID = C.USER_ID
-        WHERE C.CANDIDATE_ID = PI_CANDIDATE_ID;
-        
-        RETURN V_IS_ACTIVE;
-        
-    EXCEPTION
-        WHEN NULL_CANDIDATE_ID THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error in checking candidate account status: Candidate ID cannot be empty.'));
-            RETURN V_IS_ACTIVE;
-            
-        WHEN NO_DATA_FOUND THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error in checking candidate account status: Candidate not found.'));
-            RETURN V_IS_ACTIVE;
-            
-        WHEN OTHERS THEN
-            UTIL_PKG.ADD_NEW_LINE(UTIL_PKG.ADD_TAB('Error in checking candidate account status:: ' || SQLERRM));
-            RETURN V_IS_ACTIVE;
-            
-    END IS_CANDIDATE_ACTIVE; 
 END PKG_CANDIDATE_MANAGEMENT;
 /
 
