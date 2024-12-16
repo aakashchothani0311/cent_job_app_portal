@@ -1,7 +1,7 @@
-# team12_damg6210_project
+## Centralized Job Application Portal:
+This project was built to complete the requirements of "DAMG6210 Database Management & Database Design" course which I took at Northeastern University as part of my Master's degree.
 
-## About the Project:
-This project simplifies the job application process by creating a centralized platform where candidates can enter their details once and apply to multiple jobs seamlessly. It eliminates redundancy for job seekers and provides recruiters with consistent, accurate data. 
+This OracleDB based project simplifies the job application process by creating a centralized platform where candidates can enter their details once and apply to multiple jobs seamlessly. It eliminates redundancy for job seekers and provides recruiters with consistent, accurate data. 
 
 ## Steps to Run the Script files:
 
