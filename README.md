@@ -3,6 +3,10 @@ This project was built to complete the requirements of "DAMG6210 Database Manage
 
 This OracleDB based project simplifies the job application process by creating a centralized platform where candidates can enter their details once and apply to multiple jobs seamlessly. It eliminates redundancy for job seekers and provides recruiters with consistent, accurate data. 
 
+#### ER Diagram:
+
+<kbd>![jobAppTracker](https://github.com/user-attachments/assets/c27a6700-eccf-4093-abcd-e30c54508afe)</kbd>
+
 ## Steps to Run the Script files:
 
 1. Run the 'admin_super_user_creation.sql' from the pre_setup_scripts folder using the Oracle Database Admin user. This will create the portal's admin user. All the subsequent scripts will be run under this user.
@@ -36,3 +40,5 @@ This OracleDB based project simplifies the job application process by creating a
 
 ## Note:
 In case if the scripts need to be re-run, please run the scripts in the above specified order. The script - 'admin_super_user_creation.sql' needs to be run only once at the start.
+
+
