@@ -5,7 +5,7 @@ This OracleDB based project simplifies the job application process by creating a
 
 #### ER Diagram:
 
-<kbd>![jobAppTracker](https://github.com/user-attachments/assets/c27a6700-eccf-4093-abcd-e30c54508afe)</kbd>
+<kbd>![jobAppTracker](https://github.com/user-attachments/assets/71d4911b-e423-443b-99cc-4cacb278b36c)</kbd>
 
 ## Steps to Run the Script files:
 
